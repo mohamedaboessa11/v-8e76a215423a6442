@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive" />
+<title>دليلك الكامل · عرض Trofee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Fraunces:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0c0b0f; --bg2:#131119; --surface:#181520; --surface2:#1f1b29;
+  --line:rgba(240,230,210,.12); --line2:rgba(240,230,210,.20);
+  --ink:#f6f2ea; --muted:#b3aca1; --muted2:#7d766c;
+  --gold:#f0c674; --gold-deep:#caa14e; --live:#ff6b82; --teal:#5fd6c4; --blue:#7fb1de;
+  --ar:'IBM Plex Sans Arabic',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace; --serif:'Fraunces',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--ar);font-size:16.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 500px at 90% -5%,rgba(240,198,116,.10),transparent 60%),radial-gradient(700px 600px at -5% 20%,rgba(255,107,130,.06),transparent 55%)}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:0 22px}
+.en{font-family:var(--mono);font-size:.92em;color:var(--gold);direction:ltr;unicode-bidi:isolate}
+.num{font-family:var(--mono);color:var(--gold);direction:ltr;unicode-bidi:isolate}
+
+header{padding:64px 0 30px;border-bottom:1px solid var(--line);margin-bottom:10px}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.14em;color:var(--gold-deep);direction:ltr;text-align:left;margin-bottom:16px}
+h1{font-size:clamp(28px,5vw,42px);font-weight:700;line-height:1.25;margin-bottom:14px}
+h1 b{color:var(--gold)}
+.sub{font-size:18px;color:var(--muted)}
+.private{margin-top:20px;background:rgba(255,107,130,.10);border:1px solid rgba(255,107,130,.35);border-radius:12px;padding:13px 17px;font-size:14.5px;color:#ffc2cd}
+.private b{color:#fff}
+
+.toc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:26px 0 40px}
+.toc h3{font-size:14px;color:var(--muted);font-weight:600;margin-bottom:12px;font-family:var(--mono);letter-spacing:.08em}
+.toc ol{list-style:none;counter-reset:t;display:grid;grid-template-columns:1fr 1fr;gap:7px 24px}
+@media(max-width:640px){.toc ol{grid-template-columns:1fr}}
+.toc li{counter-increment:t;font-size:15px}
+.toc li::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);color:var(--gold-deep);margin-left:9px;font-size:12px}
+.toc a{color:var(--ink);text-decoration:none}
+.toc a:hover{color:var(--gold)}
+
+section{padding:30px 0;border-bottom:1px solid var(--line)}
+h2{font-size:25px;font-weight:700;margin-bottom:8px;line-height:1.35}
+h2 .tag{font-family:var(--mono);font-size:13px;color:var(--gold-deep);margin-left:10px;direction:ltr;unicode-bidi:isolate}
+h3.q{font-size:18px;font-weight:600;margin:22px 0 6px;color:var(--gold)}
+p{margin-bottom:13px}
+.lead{font-size:17.5px;color:var(--muted);margin-bottom:18px}
+b,strong{color:#fff;font-weight:600}
+ul{margin:0 22px 14px 0;padding:0}
+li{margin-bottom:7px}
+
+.say{background:linear-gradient(90deg,rgba(240,198,116,.10),transparent);border-right:3px solid var(--gold);border-radius:12px 0 0 12px;padding:14px 18px;margin:12px 0 16px}
+.say .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.say .line{direction:ltr;text-align:left;font-size:16px;color:#fff;font-family:var(--mono);line-height:1.6}
+.why{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 17px;margin:10px 0;font-size:15px}
+.why .lbl{font-weight:700;color:var(--teal);margin-left:6px}
+
+.gloss{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+@media(max-width:680px){.gloss{grid-template-columns:1fr}}
+.term{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.term .t{font-family:var(--mono);color:var(--gold);font-size:15px;direction:ltr;text-align:left;margin-bottom:5px;font-weight:600}
+.term .d{font-size:14.5px;color:var(--muted);line-height:1.7}
+.term .d b{color:var(--ink)}
+
+.box{background:var(--bg2);border:1px solid var(--line2);border-radius:14px;padding:18px 22px;margin:14px 0}
+.box h4{font-size:17px;margin-bottom:8px}
+.nums{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+@media(max-width:640px){.nums{grid-template-columns:1fr}}
+.nums .n{background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:13px 15px}
+.nums .n .v{font-family:var(--mono);color:var(--gold);font-size:18px;direction:ltr;text-align:left}
+.nums .n .k{font-size:13px;color:var(--muted);margin-top:3px}
+.callout{background:rgba(95,214,196,.08);border:1px solid rgba(95,214,196,.3);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:15px}
+.callout b{color:var(--teal)}
+.warn{background:rgba(255,107,130,.08);border:1px solid rgba(255,107,130,.3);border-radius:12px;padding:14px 18px;margin:14px 0;font-size:15px}
+.warn b{color:#ffc2cd}
+.back{display:inline-block;margin-top:10px;font-family:var(--mono);font-size:12px;color:var(--muted2);text-decoration:none;direction:ltr}
+.back:hover{color:var(--gold)}
+footer{padding:40px 0 70px;text-align:center;color:var(--muted2);font-family:var(--mono);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header id="top">
+  <div class="eyebrow">TROFEE · INTERVIEW PREP · AR</div>
+  <h1>دليلك الكامل لعرض <b>Trofee</b></h1>
+  <p class="sub">كل قسم في الموقع بيقول إيه، تقول إيه بالظبط، وليه. وكل مصطلح إنجليزي مشروح بالعربي.</p>
+  <div class="private">🔒 <b>ده ملف خاص بيك إنت بس.</b> فيه "اللي تقوله" و"اللي تتجنبه". متفتحوش قدام المؤسس ومتبعتهوش لحد. الموقع اللي بتعرضه له حاجة تانية.</div>
+</header>
+
+<div class="toc">
+  <h3>المحتوى</h3>
+  <ol>
+    <li><a href="#howto">ازاي تستخدم الدليل ده</a></li>
+    <li><a href="#bg">مين Trofee ومين اللي هتكلمه</a></li>
+    <li><a href="#spine">الفكرة كلها في جملة</a></li>
+    <li><a href="#gloss">قاموس المصطلحات (مهم جداً)</a></li>
+    <li><a href="#s1">القسم 1: قراءتك للوضع</a></li>
+    <li><a href="#s2">القسم 2: المبادئ الثلاثة</a></li>
+    <li><a href="#s3">القسم 3: النموذج + الحاسبة</a></li>
+    <li><a href="#s4">القسم 4: نظام جذب البايعين</a></li>
+    <li><a href="#s5">القسم 5: فورم البايعين + التقييم + النية</a></li>
+    <li><a href="#s6">القسم 6: جذب المشترين</a></li>
+    <li><a href="#s7">القسم 7: القياس والأدوات</a></li>
+    <li><a href="#s8">القسم 8: خطة الـ 90 يوم</a></li>
+    <li><a href="#s9">القسم 9: ليه أنا</a></li>
+    <li><a href="#drill">أسئلة المؤسس الصعبة وإجاباتك</a></li>
+    <li><a href="#honesty">حاجات تتجنبها (عشان متتمسكش)</a></li>
+  </ol>
+</div>
+
+<!-- HOW TO -->
+<section id="howto">
+  <h2>1) ازاي تستخدم الدليل ده</h2>
+  <p class="lead">الموقع هو اللي بتعرضه. الدليل ده هو اللي بتذاكر منه قبل المكالمة، وممكن تفتحه في موبايل جنبك أثناء الكلام.</p>
+  <ul>
+    <li>المكالمة <b>بالإنجليزي</b> (Ed و Amine بيشتغلوا بالإنجليزي). فالجُمل اللي هتقولها مكتوبة هنا بالإنجليزي جاهزة، والشرح بالعربي.</li>
+    <li>كل ما تشوف صندوق <span class="en">SAY</span> ده اللي تقوله بالظبط. الصندوق التاني <span style="color:var(--teal)">ليه</span> بيشرح سبب الكلام.</li>
+    <li>الكلمات الإنجليزية الصعبة كلها في <a href="#gloss" style="color:var(--gold)">قاموس المصطلحات</a>. ذاكرهم الأول.</li>
+    <li>تحرّك في الموقع بالأسهم <span class="en">← →</span> أو السكرول. النقط على الجنب خريطة الأقسام.</li>
+  </ul>
+</section>
+
+<!-- BACKGROUND -->
+<section id="bg">
+  <h2>2) مين Trofee ومين اللي هتكلمه</h2>
+  <p><b>Trofee</b> = منصة <span class="en">livestream shopping</span> (تسوّق عن طريق بث مباشر) في دبي. يعني زي <span class="en">Whatnot</span> بتاعة أمريكا بس للشرق الأوسط. البايع بيعمل بث مباشر ويبيع فيه مقتنيات: كروت <span class="en">(Pokémon, One Piece, sports cards)</span>، سنيكرز، ألعاب، أشياء نادرة. المشتري بيتفرّج ويزايد ويشتري لايف.</p>
+  <p>دي <span class="en">marketplace</span> من جهتين: <b>بايعين</b> (العرض) و<b>مشترين</b> (الطلب).</p>
+  <div class="box">
+    <h4>المؤسسين (لازم تعرفهم كويس)</h4>
+    <ul>
+      <li><b>Ed Sabbagh</b> – كان مدير الـ marketplace في <span class="en">Farfetch</span> لمدة 8 سنين. يعني الراجل ده <b>بنى marketplaces قبل كده وبيفهمها أحسن منك</b>. متحاولش تعلّمه أساسيات السوق، اتكلم بلغته.</li>
+      <li><b>Amine Mamlouk</b> – كان <span class="en">Chief of Staff</span> لمدير <span class="en">Souq.com</span> و<span class="en">GM في Amazon</span>.</li>
+      <li>المستثمرين: <b>BECO Capital</b> + <b>FJ Labs</b> (بتاعة <span class="en">Fabrice Grinda</span>، أشهر مستثمر marketplaces في العالم).</li>
+    </ul>
+  </div>
+  <div class="callout">💡 <b>الخلاصة:</b> دول ناس محترفة جداً في الأسواق. نقطة قوتك مش إنك تعرف أكثر منهم عن الأسواق، نقطة قوتك إنك <b>محلي (تعرف السوق العربي والواتساب)</b> و<b>بتبني الأنظمة بإيدك</b>.</div>
+</section>
+
+<!-- SPINE -->
+<section id="spine">
+  <h2>3) الفكرة كلها في جملة</h2>
+  <p class="lead">لو هتفتكر حاجة واحدة، افتكر دي. كل الموقع مبني عليها:</p>
+  <div class="say">
+    <div class="lbl">احفظها بالإنجليزي</div>
+    <div class="line">Supply is the hard side → fill the shows → win one niche → then repeat.</div>
+  </div>
+  <p>بالعربي: <b>البايعين هم الجهة الصعبة</b> (أصعب حاجة إنك تجيب بايعين كويسين). أول ما تجيبهم، <b>اضمن إن بثوثهم تتملي بمشترين</b>. اعمل ده في <b>مجال واحد بس</b> (مثلاً كروت Pokémon في الخليج) لحد ما يشتغل، وبعدين كرره في مجال تاني.</p>
+</section>
+
+<!-- GLOSSARY -->
+<section id="gloss">
+  <h2>4) قاموس المصطلحات <span class="tag">ذاكره الأول</span></h2>
+  <p class="lead">دي كل الكلمات الإنجليزية اللي ممكن تتقال. اعرفها كويس عشان لو المؤسس قالها متترددش.</p>
+  <div class="gloss">
+    <div class="term"><div class="t">GTM (Go-To-Market)</div><div class="d">استراتيجية الوصول للسوق: <b>ازاي توصّل منتجك للعملاء وتبيعه</b>.</div></div>
+    <div class="term"><div class="t">GTM Engineer / GTME</div><div class="d">مهندس الـ GTM: اللي <b>يبني الأنظمة والأدوات</b> اللي بتجيب العملاء (Clay، الأتمتة، التنقيب). دي وظيفتك.</div></div>
+    <div class="term"><div class="t">RevOps (Revenue Operations)</div><div class="d">عمليات الإيرادات: اللي <b>يربط التسويق والمبيعات وخدمة العملاء والبيانات</b> مع بعض عشان الشركة تشوف وتقيس كل حاجة.</div></div>
+    <div class="term"><div class="t">Marketplace</div><div class="d">سوق/منصة بتجمع <b>بايعين ومشترين</b>.</div></div>
+    <div class="term"><div class="t">Two-sided</div><div class="d">من جهتين: <b>عرض (البايعين) وطلب (المشترين)</b>.</div></div>
+    <div class="term"><div class="t">Supply / Demand</div><div class="d">العرض = <b>البايعين</b>. الطلب = <b>المشترين</b>.</div></div>
+    <div class="term"><div class="t">The hard side</div><div class="d">الجهة الصعبة. هنا = <b>البايعين</b>، لأنهم أصعب وأغلى في الجذب.</div></div>
+    <div class="term"><div class="t">Liquidity</div><div class="d">السيولة: إن <b>كل بث يلاقي مشترين كفاية</b>. في الموقع كتبتها بالبسيط "full shows / who shows up".</div></div>
+    <div class="term"><div class="t">Cold start</div><div class="d">مشكلة البداية الباردة: المنصة فاضية، فلا بايع ولا مشتري عايز ييجي الأول.</div></div>
+    <div class="term"><div class="t">GMV (Gross Merchandise Value)</div><div class="d"><b>إجمالي قيمة البضاعة المباعة</b> على المنصة. مش ربح Trofee، ده مجموع كل المبيعات.</div></div>
+    <div class="term"><div class="t">Take rate</div><div class="d"><b>نسبة العمولة</b> اللي Trofee بتاخدها من كل عملية بيع.</div></div>
+    <div class="term"><div class="t">AOV / order size</div><div class="d">متوسط قيمة الطلب: <b>المبلغ اللي المشتري بيصرفه</b> في المرة.</div></div>
+    <div class="term"><div class="t">Fill rate</div><div class="d"><b>نسبة البثوث اللي بتتملي</b> بمشترين كفاية.</div></div>
+    <div class="term"><div class="t">Repeat rate / repeat buyers</div><div class="d"><b>نسبة المشترين اللي بيرجعوا</b> يشتروا تاني. ده اللي بيكبّر الأرباح.</div></div>
+    <div class="term"><div class="t">Churn</div><div class="d">التسرب: البايعين أو المشترين اللي <b>بيبطلوا</b> يستخدموا المنصة.</div></div>
+    <div class="term"><div class="t">Cohort</div><div class="d">مجموعة عملاء بدأوا في نفس الوقت، بنتابعهم مع الزمن نشوف مين فضل.</div></div>
+    <div class="term"><div class="t">CRM</div><div class="d">نظام إدارة علاقات العملاء (زي HubSpot أو Attio): مكان بتتسجل فيه كل البيانات والتعاملات.</div></div>
+    <div class="term"><div class="t">Clay</div><div class="d">أداة <b>بتجمع وتكمّل بيانات</b> عن الناس/الشركات أوتوماتيك (عدد المتابعين، وسيلة التواصل، إلخ).</div></div>
+    <div class="term"><div class="t">Enrichment</div><div class="d"><b>تكميل البيانات أوتوماتيك</b>. بدل ما تدوّر بإيدك، الأداة بتجيب الناقص.</div></div>
+    <div class="term"><div class="t">ICP / fit score</div><div class="d">مواصفات العميل المثالي / <b>درجة التطابق</b>: قد إيه البايع ده مناسب.</div></div>
+    <div class="term"><div class="t">Fit vs Intent</div><div class="d"><b>التطابق</b> (مين هو) مقابل <b>النية</b> (قد إيه مهتم/نشِط دلوقتي).</div></div>
+    <div class="term"><div class="t">CAC</div><div class="d">تكلفة اكتساب العميل: <b>كام بتصرف عشان تجيب بايع</b>.</div></div>
+    <div class="term"><div class="t">Payback</div><div class="d">فترة استرداد التكلفة: <b>قد إيه بياخد عشان البايع يرجّعلك فلوسك</b>.</div></div>
+    <div class="term"><div class="t">North Star metric</div><div class="d"><b>الرقم الأساسي الواحد</b> اللي بتقيس عليه نجاحك. هنا = GMV الأسبوعي.</div></div>
+    <div class="term"><div class="t">Nurture</div><div class="d">المتابعة: تفضل تتواصل مع العميل برسايل لحد ما يجهز يشتري/يبيع.</div></div>
+    <div class="term"><div class="t">Seeding buyers</div><div class="d">إنك <b>تجيب مشترين بنفسك</b> للبثوث الأولى عشان البايع ما يلاقيش نفسه بيكلم حيطة.</div></div>
+    <div class="term"><div class="t">Whatnot</div><div class="d">أكبر منصة بث تسوّق للمقتنيات في أمريكا. <b>المثال اللي Trofee بتقلده.</b></div></div>
+    <div class="term"><div class="t">PDPL</div><div class="d">قانون حماية البيانات الإماراتي (لازم إذن العميل قبل ما تراسله).</div></div>
+  </div>
+  <a class="back" href="#top">↑ فوق</a>
+</section>
+
+<!-- S1 -->
+<section id="s1">
+  <h2>القسم 1: قراءتك للوضع <span class="tag">01 – The read</span></h2>
+  <p class="lead">العنوان: "مشكلة Trofee مش في التطبيق. المشكلة مين بييجي". يعني المنتج كويس، التحدي الحقيقي إن كل بث يلاقي بايع كويس ومشترين كفاية.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"I'm not going to flatter the product, you know it's good. The whole game is whether shows reliably fill. So everything I'll show you is built backwards from: how do we make sure every show has buyers?"</div></div>
+  <div class="why"><span class="lbl">ليه:</span> ده بيوريه إنك فاهم الأسواق، مش بس بتعرف تبعت إيميلات. وبيخليك تتكلم في اللي يهمه (السيولة) من أول ثانية.</div>
+  <p>في 4 كروت في القسم ده: <b>الموديل</b> (سوق من جهتين)، <b>الفريق</b> (إنتوا عملتوها قبل كده)، <b>التوقيت</b> (Whatnot عملت بليون دولار في أقل من 5 سنين والخليج فيه جمهور مقتنيات كبير على إنستجرام وواتساب)، و<b>الخطر</b> (البثوث الفاضية بتقتل المنصة وبتحرق بايع صرفت فلوس عشان تجيبه).</p>
+</section>
+
+<!-- S2 -->
+<section id="s2">
+  <h2>القسم 2: المبادئ الثلاثة <span class="tag">02 – Thesis</span></h2>
+  <p class="lead">3 قوانين هتمشّي عليهم الشغل:</p>
+  <p><b>1) البايعين هم الجهة الصعبة <span class="en">(supply is the hard side)</span>.</b> إنت بتجيب البايعين، والمشترين بييجوا ورا البثوث الحلوة. فأهم شغلانة = نظام بيجيب بايعين كويسين باستمرار.</p>
+  <p><b>2) السيولة هي المنتج <span class="en">(full shows are the product)</span>.</b> المنصة مش "شغالة" غير لما البثوث تتملي. في البداية هتجيب مشترين بنفسك للبثوث الأولى عشان محدش يبث لحد فاضي.</p>
+  <p><b>3) ركّز عشان تشتعل <span class="en">(win one niche)</span>.</b> اكسب مجال واحد الأول (مثلاً كروت Pokémon في الخليج) فيه بايعين ومشترين كفاية، خلّيه يشتغل، وبعدين كرره. لو فرّطت في كل المجالات بدري هتبقى ضعيف في كله.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"If you remember one thing: recruit sellers first, make sure their first shows are full, and do it in one niche before going wide."</div></div>
+</section>
+
+<!-- S3 -->
+<section id="s3">
+  <h2>القسم 3: النموذج + الحاسبة <span class="tag">03 – The model</span></h2>
+  <p class="lead">العنوان: "مش قمع <span class="en">(funnel)</span>. بيكمّل بعد البيعة الأولى". الفكرة إن السوق بيعيش على اللي بعد أول بيعة: <b>مشترين بيرجعوا</b> و<b>بايعين بيفضلوا</b>.</p>
+  <h3 class="q">الحاسبة (Calculator) – ده أقوى جزء، خد بالك منه</h3>
+  <p>فيه 5 مفاتيح (sliders) بتحرّكهم فالأرقام بتتغير لحظياً:</p>
+  <ul>
+    <li><span class="en">Active sellers</span> = عدد البايعين النشطين</li>
+    <li><span class="en">Shows / seller / week</span> = كام بث لكل بايع في الأسبوع</li>
+    <li><span class="en">Avg buyers / show</span> = متوسط المشترين في البث</li>
+    <li><span class="en">Avg spend / buyer</span> = متوسط صرف المشتري (بالدرهم AED)</li>
+    <li><span class="en">Take rate</span> = نسبة عمولة Trofee</li>
+  </ul>
+  <p>الإعداد الافتراضي <b>متعمّد إنه واقعي ومتواضع</b> (مش مبالغة): <span class="num">25</span> بايع، <span class="num">2</span> بث، <span class="num">15</span> مشتري، <span class="num">300</span> درهم، عمولة <span class="num">10%</span>. النتيجة:</p>
+  <div class="nums">
+    <div class="n"><div class="v">AED 11.7M</div><div class="k">إجمالي GMV سنوي (≈ $3.2M)</div></div>
+    <div class="n"><div class="v">AED 1.2M</div><div class="k">إيراد Trofee (العمولة)</div></div>
+    <div class="n"><div class="v">50 / wk</div><div class="k">عدد البثوث في الأسبوع</div></div>
+  </div>
+  <p>الحركة المهمة: <b>اسحب عدد البايعين لفوق وإنت بتتكلم</b>. عند <span class="num">100</span> بايع يبقى ≈ <span class="num">AED 47M</span>، وعند <span class="num">200</span> ≈ <span class="num">AED 94M</span> سنوياً. وإنت ما لمستش العمولة ولا السعر، بس كبّرت العرض.</p>
+  <div class="say"><div class="lbl">SAY (وإنت بتسحب الـ slider الأول ببطء)</div><div class="line">"I set this to a realistic early picture, about 25 active sellers. Now watch the GMV as I just grow the seller side, nothing else changes... That's the point: the biggest lever isn't take rate, it's sellers and shows. So my whole plan is built to move that one number."</div></div>
+  <div class="why"><span class="lbl">ليه:</span> ده بيثبت بالأرقام إن الجهة الصعبة (البايعين) هي أقوى مُحرّك، فبيبرّر إن كل خطتك عن البايعين. وكمان بيوريه إنك بتفكر بفلوس مش بكلام.</div>
+</section>
+
+<!-- S4 -->
+<section id="s4">
+  <h2>القسم 4: نظام جذب البايعين <span class="tag">04 – Seller engine</span></h2>
+  <p class="lead">ده الجزء اللي معظم الناس بتتكلم فيه كلام عام. إنت بتبنيه كـ <b>نظام بـ 6 خطوات</b> (دوس على أي خطوة في الموقع تتوسّع):</p>
+  <ul>
+    <li><b>Source (دوّر):</b> من إنستجرام/تيك توك، محلات الكروت والسنيكرز، جروبات المقتنيات، وناس بتبيع لايف على Whatnot/eBay.</li>
+    <li><b>Auto-fill (كمّل بالـ Clay):</b> الأداة بتكمّل بياناتهم أوتوماتيك.</li>
+    <li><b>Score (قيّم):</b> درجة تطابق <span class="en">(fit score)</span> بترتّبهم.</li>
+    <li><b>Reach out (كلّمهم):</b> واتساب الأول، والرسالة بتبدأ بـ<b>اللي يهمه</b> (جمهوره) مش بمميزاتنا.</li>
+    <li><b>Onboard (جهّزه):</b> مساعدة شخصية مش "اعمل بنفسك".</li>
+    <li><b>Go live (نزّله لايف):</b> وإحنا بنجيب مشترين لبثه الأول.</li>
+  </ul>
+  <p>في الموقع فيه مثالين حقيقيين: <b>كارت تقييم بايع</b> (seller fit score) و<b>رسالة واتساب</b> نموذجية بتبدأ باللي يهم البايع.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"This is real GTM engineering. I'd score sellers automatically so we recruit the best first and don't waste time onboarding people who'll quit. And the message leads with their audience, not our features."</div></div>
+</section>
+
+<!-- S5 -->
+<section id="s5">
+  <h2>القسم 5: فورم البايعين + التقييم + النية <span class="tag">05 – Seller form</span></h2>
+  <p class="lead">إنت سحبت الفورم الحقيقي بتاعهم وأعدت بناءه. الفكرة: الفورم الحالي بيجمع بايعين بس <b>مش بيقيّمهم ولا بيرتّبهم</b>، وناقص أهم حاجات بتتنبأ بالمبيعات.</p>
+  <div class="nums">
+    <div class="n"><div class="v">65/100</div><div class="k">من اللي بيتنبأ بمبيعات البايع، فورمهم مش بيسأل عنه</div></div>
+    <div class="n"><div class="v">+3</div><div class="k">حقول جديدة بتسدّ النقص: حجم الجمهور، باع لايف قبل كده، مبيعاته الشهرية</div></div>
+    <div class="n"><div class="v">&lt;24h</div><div class="k">توصل لأحسن بايع، متقيّم ومترتّب أوتوماتيك أول ما يقدّم</div></div>
+  </div>
+  <h3 class="q">التقييم = Fit + Intent (التطابق + النية) – نقطة قوية جداً</h3>
+  <p><b>Fit (التطابق):</b> مين هو البايع (6 عوامل بأوزان مجموعها 100: حجم الجمهور 25، باع لايف قبل كده 20، مبيعاته الحالية 20، قيمة وكمية بضاعته 15، مناسب للمجال 10، استعداده للبث 10).</p>
+  <p><b>Intent (النية):</b> قد إيه نشِط/متحمّس <b>دلوقتي</b>. بايع كويس <b>ونشِط الأسبوع ده</b> يتصل بيه فوراً. وحتى بايع قديم متنساه يطلع لفوق أول ما يرجع يتفاعل.</p>
+  <div class="box">
+    <h4>إشارات النية للبايع <span class="en">(seller intent)</span></h4>
+    قدّم/ردّ على رسايلنا · بيبث أو بيبيع أكتر الأسبوع ده · دخل جروب واتساب البايعين · جه بترشيح من بايع نشِط · بيفتح ويدوس على رسايلنا.
+  </div>
+  <div class="box">
+    <h4>نفس الفكرة للمشتري <span class="en">(buyer intent)</span> – بونص</h4>
+    اتفرّج على 3 بثوث+ الأسبوع ده · بيتابع بايع هيبث قريب · ساب مزايدة ناقصة · اشترى قبل كده ورجع. كل واحدة بتشغّل تنبيه "بايعك بيبث دلوقتي" أو معاملة VIP.
+  </div>
+  <p>القاعدة البسيطة: <b>تطابق عالي + نشِط = اتصل النهاردة</b> · تطابق عالي + هادي = تابعه · نشِط بس تطابق ضعيف = شيك بسرعة · ضعيف وهادي = قائمة انتظار.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"Right now your form treats a hot applicant and a cold one the same. I'd score them on two things, are they a good fit and are they warm right now, so your team always calls the right person first."</div></div>
+  <p style="margin-top:14px">في القسم ده فيه زرار في الموقع: <span class="en">"open the Seller Form Redesign"</span> بيفتح صفحة التفاصيل الكاملة (تقدر تفتحها قدامه).</p>
+</section>
+
+<!-- S6 -->
+<section id="s6">
+  <h2>القسم 6: جذب المشترين <span class="tag">06 – Buyers</span></h2>
+  <p class="lead">العنوان: "خلّي كل بث يجيب اللي بعده، وبعدين زوّد إعلانات". الإعلانات لوحدها <span class="en">(paid ads)</span> دلو مخرّم. الأحسن إن كل بث يجيب مشتريين البث اللي بعده.</p>
+  <p>4 طرق طبيعية:</p>
+  <ul>
+    <li><b>البايع بيجيب جمهوره</b> (الأهم): كل بايع بتجيبه بيجيب متابعينه معاه. فجذب البايع الصح = معظم جذب المشترين.</li>
+    <li><b>مقاطع من البثوث</b> على Reels/تيك توك = إعلان مجاني.</li>
+    <li><b>جروبات المقتنيات</b>: المقتنّيين متجمّعين في جروبات، ادخلها وكافئ الترشيحات. الناس هنا على الواتساب.</li>
+    <li><b>إرجاع المشترين</b>: بثوث بمواعيد + تنبيه "بايعك بيبث" = العادة بتتكوّن. هنا الفلوس بتتجمّع.</li>
+  </ul>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"In a marketplace, recruiting the right seller is most of your buyer growth, because they bring their own audience. So I don't run supply and demand as two separate teams, I run one loop."</div></div>
+</section>
+
+<!-- S7 -->
+<section id="s7">
+  <h2>القسم 7: القياس والأدوات <span class="tag">07 – Tracking</span></h2>
+  <p class="lead">"لو مش بتقيس، إنت بتخمّن". رقم أساسي واحد <span class="en">(North Star)</span> = <b>GMV الأسبوعي</b>، مقسوم لشوية مدخلات: كام بايع، نسبة امتلاء البثوث، نسبة الشراء × قيمة الطلب، نسبة الرجوع.</p>
+  <p>الأدوات (الـ stack): <b>Clay</b> لإيجاد البايعين · <b>CRM</b> (Attio/HubSpot) لمراحل البايع وأوقات الرد · <b>تتبّع</b> لكل بث/مزايدة/شراء + لوحات بيانات · <b>متابعة</b> أوتوماتيك على الواتساب.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"I'd treat the seller pipeline exactly like a sales pipeline, with stages and response times, and report the whole business on one number, weekly GMV, broken into a few inputs anyone can act on."</div></div>
+</section>
+
+<!-- S8 -->
+<section id="s8">
+  <h2>القسم 8: خطة الـ 90 يوم <span class="tag">08 – Plan</span></h2>
+  <p class="lead">خطة محدّدة بالترتيب ومقيّمة بأرقام. مجال واحد، نثبته، وبعدين نكرره. 3 مراحل (في الموقع دوس على كل مرحلة):</p>
+  <ul>
+    <li><b>أيام 0–30:</b> جهّز التتبّع واختار المجال. ابني نظام إيجاد البايعين في Clay، وكارت التقييم، ورسايل الواتساب. الهدف: النظام شغّال + 50 بايع ممتاز محدّدين + لوحات البيانات بتشتغل.</li>
+    <li><b>أيام 31–60:</b> جيب البايعين وامْلا بثوثهم. شغّل الرسايل، جهّز أول مجموعة بإيدك، اجيب مشترين للبثوث. الهدف: 20–30 بايع لايف + امتلاء 100% لأول بث + أول مشترين راجعين.</li>
+    <li><b>أيام 61–90:</b> كبّر وخلّيه قابل للتكرار. ترشيحات البايعين، أتمتة المتابعة، افتح مجال تاني بنفس النظام. الهدف: المجال الأول بيمشّي نفسه + المجال التاني بيبدأ + الـ playbook مكتوب.</li>
+  </ul>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"I'm accountable to the exit target of each phase, not activity. If by day 60 I don't have sellers live with full shows, the plan is wrong and we change it."</div></div>
+</section>
+
+<!-- S9 -->
+<section id="s9">
+  <h2>القسم 9: ليه أنا <span class="tag">09 – Why me</span></h2>
+  <ul>
+    <li><b>أبنيه وأشغّله</b>: أغلب الناس بتعمل حاجة واحدة. أنا أبني نظام جذب البايعين <b>و</b> أشغّل القياس والمتابعة.</li>
+    <li><b>محلي وبتكلم اللغة</b>: عربي وإنجليزي، واتساب، جروبات المقتنيات في الخليج، والثقة بالطريقة المحلية. ميزة Trofee على أي نسخة من Whatnot إنها محلية، وأنا محلي.</li>
+    <li><b>بشتغل بنظام</b>: ده طلع من نظام GTM بنيته بنفسي، مكتبة طرق و playbooks بشتغل منها. مش بأرتجل.</li>
+  </ul>
+  <div class="say"><div class="lbl">SAY (القفلة)</div><div class="line">"Give me one niche and 90 days. Let's prove it works."</div></div>
+</section>
+
+<!-- DRILL -->
+<section id="drill">
+  <h2>أسئلة المؤسس الصعبة وإجاباتك <span class="tag">drill</span></h2>
+  <p class="lead">دي الأسئلة اللي ناس زي Ed بتسألها فعلاً. ذاكر الإجابة، والجملة الإنجليزية جاهزة تقولها.</p>
+
+  <h3 class="q">س: منين رقم 15 (أو 35) مشتري في البث؟ ليه أصدّقه؟</h3>
+  <p>الإجابة: ده <b>هدف، مش رقم البداية</b>. في البداية 8–15 مشتري. الرقم ده نتيجة شغل السيولة بتاعي، مش افتراض بطلب منك تصدّقه. في الأول هجيب مشترين بنفسي عشان محدش يبث لحد فاضي.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"You're right to push, that's a target not a launch number. Early on I'd model 8 to 15 buyers and seed them myself. I'd never defend the number, I'd defend the plan that earns it."</div></div>
+
+  <h3 class="q">س: لو نسبة امتلاء البثوث (fill rate) نزلت 50%؟</h3>
+  <p>أول حاجة: GMV بينزل بنفس النسبة تقريباً (خطّي). بس الأخطر: البثوث الفاضية <b>بتفرّق البايعين (churn)</b>، فالضرر مضاعف. عشان كده بضمن السيولة بدري.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"First order, GMV roughly halves. But the worse part is empty shows churn the sellers I paid to get, so it compounds. That's exactly why I guarantee buyers in the early shows."</div></div>
+
+  <h3 class="q">س: ليه بتفترض كل البايعين زي بعض؟ (نفس الأداء)</h3>
+  <p>الإجابة (نقطة قوتك): مش بفترض كده، ده <b>تبسيط للعرض بس</b>. الواقع <span class="en">power law</span>: أحسن 10–20% من البايعين بيعملوا 60–80% من المبيعات. عشان كده كارت التقييم موجود: <b>عشان نلاقي البايعين الكبار بدري</b>، مش نجمّع أعداد.</p>
+  <div class="say"><div class="lbl">SAY</div><div class="line">"I won't defend it, I'll name it. Marketplaces are power-law, not average. The top 10 to 20% of sellers do most of the GMV. That's the whole reason my scorecard exists, to find those few early."</div></div>
+
+  <h3 class="q">س: كام تكلفة جذب البايع (CAC) وفترة الاسترداد (payback)؟</h3>
+  <p>أتبّع التكلفة الكاملة (تنقيب + تواصل + وقت التجهيز) مقابل اللي البايع بيعمله (GMV × العمولة). بايع بيعمل 50 ألف درهم/شهر بعمولة 10% = 5 آلاف/شهر؛ لو التكلفة 3–8 آلاف، الاسترداد أسابيع. والمقياس اللي بحاربه: بايع مجبتُهوش وعمره ما عمل بث تاني مربح.</p>
+
+  <h3 class="q">س: ليه عمولة 10%؟ تقدر تزوّدها؟</h3>
+  <p>أقدر، بس مش بدري. البايعين حساسين للسعر وعندهم بديل مجاني (إنستجرام). فبسيب العمولة قريبة من Whatnot وأكبّر <b>طرق الربح التانية</b> (بثوث مموّلة، هامش الشحن، رسوم على المشتري) بدل ما أرفع العمولة.</p>
+
+  <h3 class="q">س: ازاي تختار المجال الأول؟</h3>
+  <p>أصغر سوق يقدر يقف لوحده: كثافة مجتمع موجود، قيمة طلب، سهولة التحقق من الأصلي، وعرض بايعين موجود على إنستجرام/واتساب. في الخليج ده غالباً كروت أو سنيكرز. اكسب واحد بالكامل وبعدين كرره.</p>
+
+  <h3 class="q">س: إيه أول حاجة هتقع وإنت بتكبّر؟</h3>
+  <p>نسبة امتلاء البثوث، بسبب زيادة العرض أكتر من الطلب. لو جبت بايعين أسرع من المشترين، البثوث بتفضى وبتفرّق البايعين. عشان كده بظبط سرعة البايعين على قد المشترين.</p>
+
+  <h3 class="q">س: التقليد/المزيّف (fakes)؟</h3>
+  <p>في المقتنيات الثقة وجودية، موجة مزيّف تقتل المنصة. فبعتبر التحقق <b>ميزة تنافسية</b> مش تكلفة: بايع موثّق ياخد تقييم أعلى ويتجاب الأول، ودوائر ثقة للمشتري.</p>
+</section>
+
+<!-- HONESTY -->
+<section id="honesty">
+  <h2>حاجات تتجنبها (عشان متتمسكش)</h2>
+  <ul>
+    <li>قول مرة واحدة بدري: <b>"كل الأرقام دي نموذج توضيحي من مصادر عامة، مش أرقام Trofee الحقيقية. الفكرة شكل الحساب مش توقّع لأرباحكم."</b> (بالإنجليزي تحت).</li>
+    <li>أي رقم وإنت بتقوله، حُط قبله <span class="en">"about / roughly"</span>.</li>
+    <li>متقولش الأرقام بالكسور المعقدة. قول <span class="en">"about twelve million a year"</span> مش "eleven point seven".</li>
+    <li>متستخدمش لغة B2B (زي MQL/SQL/HubSpot deal stages) كإن Trofee بتشتغل بيها، دي منصة مستهلكين، اتكلم بايعين ومشترين.</li>
+    <li>متدّعيش معلومات داخلية. كل أبحاثك عامة (الموقع، Crunchbase، صفحات المستثمرين).</li>
+  </ul>
+  <div class="say"><div class="lbl">SAY (الكافيات في أول الحاسبة)</div><div class="line">"Quick caveat, every number here is an illustrative model from public info, not your internal data. The point is the shape of the math and which lever matters."</div></div>
+  <a class="back" href="#top">↑ فوق</a>
+</section>
+
+<footer>
+  خاص بمحمد أبو عيسى · تحضير مقابلة Trofee · لا يُعرض للمؤسس
+</footer>
+
+</div>
+</body>
+</html>
