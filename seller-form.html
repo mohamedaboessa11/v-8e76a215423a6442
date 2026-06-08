@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Trofee · Seller Intake Redesign – Mohamed Abuissa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#fbf9f4; --paper2:#f3efe6; --ink:#1c1916; --ink2:#4a443c;
+  --muted:#7c7468; --line:#e2dccf; --line2:#d2cabb;
+  --gold:#b07d1a; --gold-soft:#f6edd8; --green:#2f7d5b; --red:#b5483b; --blue:#2b5e8a;
+  --serif:'Fraunces',Georgia,serif; --sans:'Hanken Grotesk',-apple-system,sans-serif; --mono:'IBM Plex Mono',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#dad4c8;color:var(--ink);font-family:var(--sans);font-size:13px;line-height:1.5;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{max-width:860px;margin:24px auto;background:var(--paper);padding:46px 50px;box-shadow:0 10px 40px rgba(0,0,0,.18)}
+/* header */
+.head{border-bottom:2px solid var(--ink);padding-bottom:16px;margin-bottom:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+.head .ey{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.head h1{font-family:var(--serif);font-weight:600;font-size:27px;line-height:1.05;letter-spacing:-.01em}
+.head h1 em{font-style:italic;color:var(--gold)}
+.head .by{text-align:right;font-size:11px;color:var(--muted);font-family:var(--mono);line-height:1.7;flex:0 0 auto}
+.head .by b{color:var(--ink);font-family:var(--sans);font-weight:600;font-size:12px}
+.intro{background:var(--gold-soft);border-left:3px solid var(--gold);padding:12px 16px;border-radius:0 7px 7px 0;font-size:12.5px;color:var(--ink2);margin-bottom:26px}
+.intro b{color:var(--ink)}
+/* section */
+h2{font-family:var(--serif);font-weight:600;font-size:18px;margin:30px 0 4px;letter-spacing:-.01em;display:flex;align-items:center;gap:10px}
+h2 .n{font-family:var(--mono);font-size:11px;color:#fff;background:var(--ink);width:21px;height:21px;border-radius:50%;display:inline-grid;place-items:center;flex:0 0 auto}
+.sub{font-size:12px;color:var(--muted);margin-bottom:13px}
+/* tables */
+table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:6px}
+th{text-align:left;font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:7px 9px;border-bottom:1.5px solid var(--line2);vertical-align:bottom}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+td.w{font-family:var(--mono);color:var(--gold);font-weight:600;text-align:center}
+tr.tot td{border-top:1.5px solid var(--ink);border-bottom:none;font-weight:700;font-family:var(--mono);padding-top:8px}
+.fname{font-weight:600;color:var(--ink)}
+.new{display:inline-block;font-family:var(--mono);font-size:8px;letter-spacing:.08em;background:var(--gold);color:#fff;padding:1px 5px;border-radius:3px;vertical-align:middle;margin-left:5px}
+.req{color:var(--red);font-family:var(--mono);font-size:10px}
+.opt{color:var(--muted);font-family:var(--mono);font-size:10px}
+.src-form{color:var(--blue);font-family:var(--mono);font-size:10px;font-weight:500}
+.src-clay{color:var(--green);font-family:var(--mono);font-size:10px;font-weight:500}
+/* tiers */
+.tiers{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-top:8px}
+.tier{border:1px solid var(--line2);border-radius:8px;padding:12px;background:#fff}
+.tier .tg{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.tier .lt{font-family:var(--serif);font-size:20px;font-weight:700}
+.tier .rng{font-family:var(--mono);font-size:10px;color:var(--muted)}
+.tier .act{font-size:11px;color:var(--ink2);line-height:1.4;margin-bottom:6px}
+.tier .sla{font-family:var(--mono);font-size:9.5px;letter-spacing:.04em;text-transform:uppercase;padding-top:6px;border-top:1px solid var(--line);font-weight:600}
+.tA{border-top:3px solid var(--green)} .tA .lt{color:var(--green)} .tA .sla{color:var(--green)}
+.tB{border-top:3px solid var(--gold)} .tB .lt{color:var(--gold)} .tB .sla{color:var(--gold)}
+.tC{border-top:3px solid var(--blue)} .tC .lt{color:var(--blue)} .tC .sla{color:var(--blue)}
+.tD{border-top:3px solid var(--muted)} .tD .lt{color:var(--muted)} .tD .sla{color:var(--muted)}
+/* enrichment + refuse */
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:8px}
+.box{background:#fff;border:1px solid var(--line2);border-radius:8px;padding:14px 16px}
+.box h3{font-family:var(--serif);font-size:14px;font-weight:600;margin-bottom:8px}
+.box ul{list-style:none}
+.box li{font-size:11.5px;padding:4px 0 4px 16px;position:relative;color:var(--ink2);line-height:1.4}
+.box li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.box.refuse li::before{background:var(--red);border-radius:1px}
+.layer{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:9px 0 3px}
+.flow{font-family:var(--mono);font-size:10.5px;color:var(--ink2);background:var(--paper2);border-radius:6px;padding:9px 11px;margin-top:9px;line-height:1.7}
+.flow b{color:var(--gold)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;font-size:10.5px;color:var(--muted);margin-top:10px;font-family:var(--mono)}
+.legend span b{font-weight:600}
+footer{margin-top:28px;border-top:1px solid var(--line);padding-top:12px;font-size:10px;color:var(--muted);line-height:1.6;font-family:var(--mono)}
+@media print{body{background:#fff}.page{box-shadow:none;margin:0;max-width:100%;padding:24px 26px}@page{size:A4;margin:12mm}}
+@media(max-width:680px){.tiers,.cols{grid-template-columns:1fr}.head{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="head">
+    <div>
+      <div class="ey">Seller form → score &amp; sort sellers</div>
+      <h1>Turning the seller form into a way to <em>find your best sellers</em></h1>
+    </div>
+    <div class="by"><b>Mohamed Abuissa</b><br>GTM Engineer · RevOps<br>Prepared for Trofee</div>
+  </div>
+
+  <div class="intro">
+    Your current form collects sellers. This version makes it <b>score and sort</b> them, so your best applicants get a personal message within 24 hours and the rest self-serve. Two changes do the heavy lifting: ask for the things that actually predict how much a seller will sell (audience size + whether they've sold live), and fill in the rest automatically so the form stays short.
+  </div>
+
+  <!-- 1. FORM -->
+  <h2><span class="n">1</span> The redesigned form</h2>
+  <div class="sub">Fields marked <span class="new">NEW</span> close the gaps in today's form. Keep required fields short, fill the rest in automatically.</div>
+  <table>
+    <thead><tr><th style="width:30%">Field</th><th style="width:13%">Req?</th><th style="width:25%">Type</th><th>Why it earns its place</th></tr></thead>
+    <tbody>
+      <tr><td class="fname">Full name · email · phone</td><td><span class="req">required</span></td><td>text</td><td>Contact + identity</td></tr>
+      <tr><td class="fname">WhatsApp OK? · language (AR/EN)<span class="new">NEW</span></td><td><span class="req">required</span></td><td>toggle + select</td><td>WhatsApp is what people here actually reply on; language sets the follow-up</td></tr>
+      <tr><td class="fname">Location (city, country)</td><td><span class="req">required</span></td><td>select, serviceable regions</td><td>Can we ship + take payment; rules out other regions early</td></tr>
+      <tr><td class="fname">Individual or registered business</td><td><span class="req">required</span></td><td>radio</td><td>ID, tax, trust</td></tr>
+      <tr><td class="fname">Categories you sell</td><td><span class="req">required</span></td><td>multi-select</td><td>Does it fit the launch niche · <b>scores</b></td></tr>
+      <tr><td class="fname">Primary social handle(s)</td><td><span class="req">required</span></td><td>IG / TikTok / YouTube handle</td><td>We auto-pull audience size from this</td></tr>
+      <tr><td class="fname">Audience size band (per platform)<span class="new">NEW</span></td><td><span class="req">required</span></td><td>band select</td><td>The #1 thing that predicts sales. Self-report as backup · <b>scores</b></td></tr>
+      <tr><td class="fname">Have you sold live before?<span class="new">NEW</span></td><td><span class="req">required</span></td><td>No / IG Live / TikTok / Whatnot / eBay Live / Other</td><td>People who've sold live ramp fast and stay · <b>scores</b></td></tr>
+      <tr><td class="fname">Roughly how much do you sell / month today?<span class="new">NEW</span></td><td><span class="req">required</span></td><td>&lt;5k / 5–20k / 20–50k / 50k+ AED</td><td>Best signal of how much they'll sell · <b>scores</b></td></tr>
+      <tr><td class="fname">Typical item price range<span class="new">NEW</span></td><td><span class="opt">optional</span></td><td>band select</td><td>Price signal; separates 100 grails from 100 keychains · <b>scores</b></td></tr>
+      <tr><td class="fname">How many items to sell?</td><td><span class="req">required</span></td><td>≤100 / 100–500 / 500–1k / 1k+</td><td>How much stock (now read together with price) · <b>scores</b></td></tr>
+      <tr><td class="fname">Hours you can go live / week</td><td><span class="req">required</span></td><td>1–5 / 5–10 / 10+ / unsure</td><td>How many shows per week · <b>scores</b></td></tr>
+      <tr><td class="fname">When could you run your first show?<span class="new">NEW</span></td><td><span class="opt">optional</span></td><td>this week / 2 wks / month / unsure</td><td>How fast we can get their first show live</td></tr>
+      <tr><td class="fname">How did you hear about us?<span class="new">NEW</span></td><td><span class="req">required</span></td><td>structured dropdown</td><td>So we can see which channels bring good sellers</td></tr>
+      <tr><td class="fname">Referred by a seller? (who)<span class="new">NEW</span></td><td><span class="opt">optional</span></td><td>handle/name</td><td>Powers and measures seller referrals</td></tr>
+      <tr><td class="fname">Comms consent (PDPL)<span class="new">NEW</span></td><td><span class="req">required</span></td><td>checkbox</td><td>UAE data-protection rules for messaging them</td></tr>
+    </tbody>
+  </table>
+
+  <!-- 2. SCORING MATRIX -->
+  <h2><span class="n">2</span> Seller score</h2>
+  <div class="sub">Six things that predict sales, weighted to add up to 100, scored automatically on every application.</div>
+  <table>
+    <thead><tr><th style="width:27%">What we score</th><th class="w" style="width:11%">Weight</th><th style="width:42%">How it's scored</th><th style="width:20%">Where it comes from</th></tr></thead>
+    <tbody>
+      <tr><td class="fname">Audience size &amp; engagement</td><td class="w">25</td><td>1 = 50k+ engaged · 0.5 = 5–50k · 0 = &lt;5k or none</td><td><span class="src-clay">Clay enrich</span> + form fallback</td></tr>
+      <tr><td class="fname">Proven live-selling</td><td class="w">20</td><td>1 = sells live now · 0.5 = sold live before · 0 = never</td><td><span class="src-form">Form</span> + <span class="src-clay">Clay</span> verify</td></tr>
+      <tr><td class="fname">Current sales traction</td><td class="w">20</td><td>1 = 50k+/mo · 0.6 = 20–50k · 0.3 = 5–20k · 0 = &lt;5k</td><td><span class="src-form">Form</span></td></tr>
+      <tr><td class="fname">Inventory value &amp; depth</td><td class="w">15</td><td>depth band × price band, normalised 0–1</td><td><span class="src-form">Form</span></td></tr>
+      <tr><td class="fname">Category fit to launch niche</td><td class="w">10</td><td>1 = core niche (TCG/sneakers) · 0.5 = adjacent · 0 = off</td><td><span class="src-form">Form</span></td></tr>
+      <tr><td class="fname">Go-live commitment</td><td class="w">10</td><td>1 = 10h+ · 0.6 = 5–10h · 0.3 = 1–5h · 0 = unsure</td><td><span class="src-form">Form</span></td></tr>
+      <tr class="tot"><td>Total</td><td class="w">100</td><td>each score × its weight, added up → /100</td><td>auto on submit</td></tr>
+    </tbody>
+  </table>
+  <div class="legend"><span><b style="color:var(--blue)">■</b> From the form</span><span><b style="color:var(--green)">■</b> Auto-filled (Clay)</span><span>Anything unknown scores 0, never blank, so totals stay comparable.</span></div>
+
+  <!-- 3. TIERS -->
+  <h2><span class="n">3</span> Tiers &amp; routing</h2>
+  <div class="sub">The score is only useful if it changes what happens next. Your team's time goes to A and B.</div>
+  <div class="tiers">
+    <div class="tier tA"><div class="tg"><span class="lt">A</span><span class="rng">80–100</span></div><div class="act">Hands-on. Personal WhatsApp, help run their first show within 7 days, <b>bring buyers</b>.</div><div class="sla">Contact &lt; 24h</div></div>
+    <div class="tier tB"><div class="tg"><span class="lt">B</span><span class="rng">60–79</span></div><div class="act">Fast-track. Guided group onboarding, first show within 2 weeks, buyers brought in if niche fits.</div><div class="sla">Contact &lt; 72h</div></div>
+    <div class="tier tC"><div class="tg"><span class="lt">C</span><span class="rng">40–59</span></div><div class="act">Self-serve onboarding + follow-up. Bring them in when audience or stock grows.</div><div class="sla">Automated</div></div>
+    <div class="tier tD"><div class="tg"><span class="lt">D</span><span class="rng">&lt;40</span></div><div class="act">Waitlist / nurture, or decline politely. Re-score if they re-apply with traction.</div><div class="sla">No human time</div></div>
+  </div>
+
+  <!-- 4 + 5 -->
+  <div class="cols">
+    <div>
+      <h2><span class="n">4</span> Auto-fill (Clay)</h2>
+      <div class="sub">Runs automatically when they apply, so the form stays short.</div>
+      <div class="box">
+        <ul>
+          <li>Pull follower count + engagement from IG / TikTok / YouTube handle</li>
+          <li>Check if they already sell live (Whatnot / eBay Live)</li>
+          <li>Work out category + how often they post from recent posts</li>
+          <li>Remove duplicates against your CRM</li>
+          <li>Flag fakes / restricted goods</li>
+        </ul>
+        <div class="flow">apply → <b>auto-fill</b> → <b>score</b> → save tier to CRM → <b>send to the right person</b>: Tier A triggers a WhatsApp + task within 24h</div>
+      </div>
+    </div>
+    <div>
+      <h2><span class="n">5</span> Auto-decline</h2>
+      <div class="sub">Overrides the score. A high score never beats a deal-breaker.</div>
+      <div class="box refuse">
+        <div class="layer">Legal / trust</div>
+        <ul><li>Counterfeits, replicas, or "rep" goods</li><li>Restricted / regulated items; under-18; out-of-region</li></ul>
+        <div class="layer">Behaviour</div>
+        <ul><li>Won't go live (the whole point)</li><li>Wants list-only, eBay-style, no shows</li></ul>
+        <div class="layer">Money</div>
+        <ul><li>Baskets too small to cover payment, shipping &amp; support</li></ul>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Prepared by Mohamed Abuissa for Trofee.
+  </footer>
+
+</div>
+</body>
+</html>
