@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
+<meta name="referrer" content="no-referrer" />
+<title>Trofee · GTM Engineering + RevOps Teardown – Mohamed Abuissa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a090c;
+  --bg2:#100e13;
+  --surface:#16131b;
+  --surface2:#1d1925;
+  --line:rgba(240,230,210,.10);
+  --line2:rgba(240,230,210,.18);
+  --ink:#f5f1e8;
+  --muted:#a39c92;
+  --muted2:#736d66;
+  --gold:#f0c674;
+  --gold-deep:#caa14e;
+  --live:#ff3b5c;
+  --live-soft:rgba(255,59,92,.14);
+  --teal:#5fd6c4;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Hanken Grotesk',-apple-system,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+  --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+/* grain + atmosphere */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(1100px 600px at 78% -8%, rgba(240,198,116,.10), transparent 60%),
+    radial-gradient(900px 700px at -5% 18%, rgba(255,59,92,.08), transparent 55%),
+    radial-gradient(800px 800px at 110% 90%, rgba(95,214,196,.05), transparent 60%);
+}
+body::after{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.035;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.wrap{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;padding:0 28px}
+
+/* ---------- side nav ---------- */
+.sidenav{position:fixed;left:26px;top:50%;transform:translateY(-50%);z-index:60;display:flex;flex-direction:column;gap:14px}
+.sidenav a{display:flex;align-items:center;gap:11px;color:var(--muted2);text-decoration:none;font:600 11px/1 var(--sans);letter-spacing:.14em;text-transform:uppercase;transition:.25s}
+.sidenav .dot{width:8px;height:8px;border-radius:50%;background:transparent;border:1.5px solid var(--muted2);transition:.25s;flex:0 0 auto}
+.sidenav a span{opacity:0;transform:translateX(-6px);transition:.25s}
+.sidenav a:hover span,.sidenav a.active span{opacity:1;transform:none}
+.sidenav a:hover,.sidenav a.active{color:var(--gold)}
+.sidenav a.active .dot,.sidenav a:hover .dot{background:var(--gold);border-color:var(--gold);box-shadow:0 0 0 4px rgba(240,198,116,.15)}
+@media(max-width:1320px){.sidenav{display:none}}
+
+/* ---------- top bar ---------- */
+.topbar{position:fixed;top:0;left:0;right:0;z-index:55;display:flex;align-items:center;justify-content:space-between;
+  padding:16px 30px;backdrop-filter:blur(10px);background:linear-gradient(180deg,rgba(10,9,12,.85),rgba(10,9,12,0));}
+.brand{font-family:var(--serif);font-weight:600;font-size:19px;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+.brand b{color:var(--gold)}
+.livedot{width:9px;height:9px;border-radius:50%;background:var(--live);box-shadow:0 0 0 0 rgba(255,59,92,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,59,92,.55)}70%{box-shadow:0 0 0 10px rgba(255,59,92,0)}100%{box-shadow:0 0 0 0 rgba(255,59,92,0)}}
+.topbar .right{display:flex;align-items:center;gap:18px}
+.note-toggle{font:600 12px/1 var(--sans);letter-spacing:.04em;color:var(--ink);background:var(--surface2);border:1px solid var(--line2);
+  padding:9px 14px;border-radius:999px;cursor:pointer;transition:.2s;display:flex;align-items:center;gap:8px}
+.note-toggle:hover{border-color:var(--gold);color:var(--gold)}
+.note-toggle .sw{width:26px;height:15px;border-radius:999px;background:#2a2533;position:relative;transition:.2s;flex:0 0 auto}
+.note-toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:11px;height:11px;border-radius:50%;background:var(--muted);transition:.2s}
+body.notes .note-toggle .sw{background:var(--gold)}
+body.notes .note-toggle .sw::after{left:13px;background:#1a1208}
+@media(max-width:600px){.topbar .pgnote{display:none}}
+
+/* presenter notes */
+.say{display:none;margin-top:20px;border-left:3px solid var(--gold);background:linear-gradient(90deg,rgba(240,198,116,.07),transparent);
+  padding:14px 18px;border-radius:0 12px 12px 0;font-size:15px;color:#e7dcc4}
+.say b{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:5px}
+body.notes .say{display:block}
+
+/* ---------- sections ---------- */
+section{padding:108px 0;position:relative}
+.sec-tag{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.sec-tag::before{content:"";width:30px;height:1px;background:var(--gold-deep);display:inline-block}
+h2{font-family:var(--serif);font-weight:600;font-size:clamp(30px,4.6vw,52px);line-height:1.04;letter-spacing:-.015em;margin-bottom:18px}
+h2 em{font-style:italic;color:var(--gold)}
+.lead{font-size:clamp(17px,2vw,21px);color:var(--muted);max-width:760px;line-height:1.55}
+.lead strong{color:var(--ink);font-weight:600}
+
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- HERO ---------- */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding-top:90px;padding-bottom:60px}
+.hero .kicker{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:26px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.chip-live{display:inline-flex;align-items:center;gap:8px;background:var(--live-soft);border:1px solid rgba(255,59,92,.35);color:#ff8aa0;
+  padding:5px 12px;border-radius:999px;font-size:12px;letter-spacing:.08em;font-weight:600}
+.hero h1{font-family:var(--serif);font-weight:600;font-size:clamp(42px,8vw,96px);line-height:.98;letter-spacing:-.025em;max-width:14ch;margin-bottom:28px}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero h1 .live-word{color:var(--live)}
+.hero p.sub{font-size:clamp(18px,2.4vw,23px);color:var(--muted);max-width:680px;line-height:1.5}
+.hero p.sub b{color:var(--ink);font-weight:600}
+.hero .meta{margin-top:42px;display:flex;gap:38px;flex-wrap:wrap;align-items:center}
+.hero .meta div{display:flex;flex-direction:column;gap:3px}
+.hero .meta .k{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2)}
+.hero .meta .v{font-size:16px;color:var(--ink);font-weight:600}
+.scrollcue{margin-top:54px;display:inline-flex;align-items:center;gap:10px;color:var(--muted);font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.scrollcue .arr{width:24px;height:24px;border:1px solid var(--line2);border-radius:50%;display:grid;place-items:center;animation:bob 1.8s infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
+
+/* ---------- cards grid ---------- */
+.grid{display:grid;gap:18px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+@media(max-width:880px){.g2,.g3,.g4{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px;transition:.3s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--line2);transform:translateY(-3px);background:var(--surface2)}
+.card .ix{font-family:var(--mono);font-size:12px;color:var(--gold-deep);letter-spacing:.1em;margin-bottom:14px}
+.card h3{font-family:var(--serif);font-weight:600;font-size:22px;margin-bottom:9px;letter-spacing:-.01em}
+.card p{font-size:15.5px;color:var(--muted);line-height:1.55}
+.card p b{color:var(--ink);font-weight:600}
+
+/* thesis laws */
+.law{display:flex;gap:22px;padding:30px 0;border-top:1px solid var(--line)}
+.law:last-child{border-bottom:1px solid var(--line)}
+.law .num{font-family:var(--serif);font-style:italic;font-size:54px;line-height:1;color:var(--gold);flex:0 0 auto;width:76px}
+.law h3{font-family:var(--serif);font-size:25px;font-weight:600;margin-bottom:7px;letter-spacing:-.01em}
+.law p{color:var(--muted);font-size:16px;max-width:720px}
+.law p .src{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:.05em}
+
+/* ---------- bowtie ---------- */
+.bowtie{display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:stretch;margin-top:14px;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:var(--bg2)}
+@media(max-width:880px){.bowtie{grid-template-columns:1fr}}
+.bt-col{padding:26px}
+.bt-col h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:9px}
+.bt-supply h4{color:var(--gold)}
+.bt-demand h4{color:#ff8aa0}
+.bt-stage{display:flex;align-items:center;gap:12px;padding:11px 14px;margin-bottom:8px;border-radius:11px;background:var(--surface);border:1px solid var(--line);font-size:14.5px}
+.bt-stage .w{font-family:var(--mono);font-size:11px;color:var(--muted2);margin-left:auto}
+.bt-mid{background:linear-gradient(180deg,rgba(240,198,116,.10),rgba(255,59,92,.10));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 22px;border-left:1px solid var(--line);border-right:1px solid var(--line);min-width:170px}
+.bt-mid .knot{font-family:var(--serif);font-style:italic;font-size:26px;color:var(--ink);text-align:center;line-height:1.1}
+.bt-mid .sub{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:8px;text-align:center}
+@media(max-width:880px){.bt-mid{border:none;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}}
+
+/* ---------- calculator ---------- */
+.calc{margin-top:20px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line2);border-radius:20px;overflow:hidden;background:var(--surface)}
+@media(max-width:880px){.calc{grid-template-columns:1fr}}
+.calc-inputs{padding:30px;border-right:1px solid var(--line)}
+@media(max-width:880px){.calc-inputs{border-right:none;border-bottom:1px solid var(--line)}}
+.calc-inputs h4,.calc-out h4{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:22px}
+.slider{margin-bottom:22px}
+.slider .row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.slider label{font-size:14.5px;color:var(--ink);font-weight:500}
+.slider .val{font-family:var(--mono);font-size:15px;color:var(--gold);font-weight:600}
+input[type=range]{-webkit-appearance:none;width:100%;height:4px;border-radius:4px;background:#2c2735;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--gold);cursor:pointer;border:3px solid #1a1208;box-shadow:0 0 0 1px var(--gold)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--gold);cursor:pointer;border:3px solid #1a1208}
+.calc-out{padding:30px;background:linear-gradient(160deg,rgba(240,198,116,.06),rgba(255,59,92,.04))}
+.bignum{margin-bottom:24px}
+.bignum .lab{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.bignum .n{font-family:var(--serif);font-weight:600;font-size:clamp(30px,5vw,46px);line-height:1;letter-spacing:-.02em}
+.bignum.gold .n{color:var(--gold)}
+.bignum.live .n{color:#ff8aa0}
+.bignum .usd{font-family:var(--mono);font-size:13px;color:var(--muted2);margin-top:5px}
+.outrow{display:flex;gap:24px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:20px}
+.outrow .it{flex:1;min-width:120px}
+.outrow .it .lab{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);margin-bottom:3px}
+.outrow .it .n{font-family:var(--mono);font-size:18px;color:var(--ink);font-weight:600}
+
+/* ---------- pipeline ---------- */
+.pipe{display:flex;gap:10px;margin-top:18px;flex-wrap:wrap}
+.pstep{flex:1;min-width:128px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:.25s;position:relative}
+.pstep:hover{border-color:var(--gold);background:var(--surface2)}
+.pstep.active{border-color:var(--gold);background:var(--surface2);box-shadow:0 8px 30px rgba(0,0,0,.4)}
+.pstep .pn{font-family:var(--mono);font-size:11px;color:var(--gold-deep);margin-bottom:10px}
+.pstep h4{font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:5px}
+.pstep .tool{font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:.03em}
+.pdetail{margin-top:16px;background:var(--bg2);border:1px solid var(--line2);border-radius:16px;padding:26px;min-height:120px}
+.pdetail h4{font-family:var(--serif);font-size:22px;font-weight:600;margin-bottom:8px}
+.pdetail h4 span{color:var(--gold)}
+.pdetail p{color:var(--muted);font-size:15.5px;margin-bottom:12px;max-width:760px}
+.pdetail ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 24px}
+@media(max-width:700px){.pdetail ul{grid-template-columns:1fr}}
+.pdetail li{font-size:14.5px;color:var(--ink);padding-left:20px;position:relative}
+.pdetail li::before{content:"▸";color:var(--gold);position:absolute;left:0}
+
+/* sample artifact panes */
+.artifact{background:#0d0c10;border:1px solid var(--line2);border-radius:16px;overflow:hidden;font-family:var(--mono);font-size:13px}
+.artifact .head{background:#15131a;padding:11px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:8px;color:var(--muted)}
+.artifact .head .d{width:10px;height:10px;border-radius:50%}
+.artifact .body{padding:18px}
+.artifact .body .l{display:block;margin-bottom:6px;color:#cfc7ba}
+.artifact .body .c{color:var(--gold)}
+.artifact .body .m{color:var(--muted2)}
+.scorebar{display:flex;align-items:center;gap:10px;margin:7px 0}
+.scorebar .nm{flex:0 0 150px;color:#cfc7ba}
+.scorebar .track{flex:1;height:7px;background:#221d2a;border-radius:4px;overflow:hidden}
+.scorebar .fill{height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold))}
+.scorebar .pct{flex:0 0 38px;text-align:right;color:var(--gold)}
+
+/* loops */
+.loop{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px}
+.loop .lt{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.loop .lt .ic{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;font-size:17px;background:var(--surface2);border:1px solid var(--line2)}
+.loop h3{font-family:var(--serif);font-size:19px;font-weight:600}
+.loop .flow{font-family:var(--mono);font-size:12.5px;color:var(--gold);margin-bottom:10px;line-height:1.7}
+.loop p{font-size:14.5px;color:var(--muted)}
+
+/* metric tree */
+.tree{margin-top:18px;border:1px solid var(--line);border-radius:18px;padding:30px;background:var(--bg2)}
+.nsm{text-align:center;margin-bottom:24px}
+.nsm .lab{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.nsm .v{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--gold)}
+.inputs-tree{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+@media(max-width:880px){.inputs-tree{grid-template-columns:repeat(2,1fr)}}
+.inputs-tree .leaf{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;text-align:center}
+.inputs-tree .leaf .t{font-size:13.5px;color:var(--ink);font-weight:600;margin-bottom:3px}
+.inputs-tree .leaf .d{font-family:var(--mono);font-size:11px;color:var(--muted2)}
+
+/* stack rows */
+.stack{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:18px}
+@media(max-width:880px){.stack{grid-template-columns:1fr}}
+.stackrow{display:flex;gap:16px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px}
+.stackrow .layer{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold-deep);flex:0 0 92px;padding-top:3px}
+.stackrow .body h4{font-family:var(--serif);font-size:17px;font-weight:600;margin-bottom:3px}
+.stackrow .body p{font-size:14px;color:var(--muted)}
+.stackrow .body .tools{font-family:var(--mono);font-size:12px;color:var(--teal);margin-top:6px}
+
+/* ---------- roadmap tabs ---------- */
+.tabs{display:flex;gap:10px;margin-top:18px;margin-bottom:20px;flex-wrap:wrap}
+.tab{flex:1;min-width:200px;text-align:left;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;cursor:pointer;transition:.25s}
+.tab:hover{border-color:var(--line2)}
+.tab.active{border-color:var(--gold);background:linear-gradient(160deg,rgba(240,198,116,.10),transparent)}
+.tab .ph{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold-deep);margin-bottom:6px}
+.tab .tt{font-family:var(--serif);font-size:19px;font-weight:600;line-height:1.15}
+.tab .days{font-family:var(--mono);font-size:11px;color:var(--muted2);margin-top:5px}
+.panel{display:none}
+.panel.show{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
+.panel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+@media(max-width:880px){.panel-grid{grid-template-columns:1fr}}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px}
+.pcard .h{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.pcard .h .dotc{width:7px;height:7px;border-radius:50%}
+.pcard ul{list-style:none}
+.pcard li{font-size:14.5px;color:var(--ink);padding:7px 0 7px 20px;position:relative;border-bottom:1px solid rgba(255,255,255,.04)}
+.pcard li:last-child{border-bottom:none}
+.pcard li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;border-radius:50%;background:var(--gold)}
+.target{margin-top:14px;background:var(--bg2);border:1px solid var(--line2);border-radius:14px;padding:18px 22px;display:flex;align-items:center;gap:16px}
+.target .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.target .v{font-family:var(--serif);font-size:20px;font-weight:600;color:var(--gold)}
+
+/* ---------- close ---------- */
+.close{text-align:center}
+.edge{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px;text-align:left}
+@media(max-width:880px){.edge{grid-template-columns:1fr}}
+.edge .e{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:26px}
+.edge .e .ic{font-size:22px;margin-bottom:12px}
+.edge .e h3{font-family:var(--serif);font-size:20px;font-weight:600;margin-bottom:7px}
+.edge .e p{font-size:14.5px;color:var(--muted)}
+.cta{margin-top:46px;font-family:var(--serif);font-style:italic;font-size:clamp(24px,3.6vw,38px);line-height:1.25;color:var(--ink);max-width:18ch;margin-left:auto;margin-right:auto}
+.cta b{color:var(--gold);font-style:normal;font-weight:600}
+.signoff{margin-top:40px;display:inline-flex;flex-direction:column;gap:4px;align-items:center}
+.signoff .nm{font-family:var(--serif);font-size:24px;font-weight:600}
+.signoff .rl{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+
+footer{padding:50px 0 70px;text-align:center;color:var(--muted2);font-family:var(--mono);font-size:12px;letter-spacing:.06em;border-top:1px solid var(--line);margin-top:40px}
+footer .dis{max-width:640px;margin:0 auto 14px;line-height:1.6}
+
+.kbd{font-family:var(--mono);font-size:11px;background:var(--surface2);border:1px solid var(--line2);border-radius:5px;padding:2px 7px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="brand"><span class="livedot"></span> Trofee <span style="color:var(--muted2);font-weight:400">×</span> <b>GTM Engineering</b></div>
+  <div class="right">
+    <span class="pgnote" style="font-family:var(--mono);font-size:11px;color:var(--muted2);letter-spacing:.1em">Prepared for Ed &amp; Amine</span>
+    <button class="note-toggle" id="noteBtn"><span class="sw"></span> Presenter notes</button>
+  </div>
+</div>
+
+<!-- SIDE NAV -->
+<nav class="sidenav" id="sidenav">
+  <a href="#hero"><span class="dot"></span><span>Open</span></a>
+  <a href="#read"><span class="dot"></span><span>The read</span></a>
+  <a href="#thesis"><span class="dot"></span><span>Thesis</span></a>
+  <a href="#bowtie"><span class="dot"></span><span>Bowtie model</span></a>
+  <a href="#supply"><span class="dot"></span><span>Seller engine</span></a>
+  <a href="#demand"><span class="dot"></span><span>Demand gen</span></a>
+  <a href="#revops"><span class="dot"></span><span>RevOps stack</span></a>
+  <a href="#plan"><span class="dot"></span><span>90-day plan</span></a>
+  <a href="#close"><span class="dot"></span><span>Why me</span></a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="wrap">
+    <div class="kicker rv">
+      <span>GTM Engineering × RevOps</span>
+      <span class="chip-live"><span class="livedot"></span> Live commerce · MENA</span>
+    </div>
+    <h1 class="rv">Supply is the hard side. Let's go <span class="live-word">win it.</span></h1>
+    <p class="sub rv">An unsolicited teardown of Trofee's go-to-market – and the exact <b>90-day plan</b> I'd run as your first GTM Engineer. Built so we can walk it together, live.</p>
+    <div class="meta rv">
+      <div><span class="k">Prepared by</span><span class="v">Mohamed Abuissa</span></div>
+      <div><span class="k">For</span><span class="v">Ed Sabbagh &amp; Amine Mamlouk</span></div>
+      <div><span class="k">Discipline</span><span class="v">GTM Engineer + RevOps</span></div>
+      <div><span class="k">Lens</span><span class="v">Two-sided marketplace</span></div>
+    </div>
+    <div class="say"><b>🎤 Open the call</b>"Before we talk about me, I wanted to show you how I think – so I tore down Trofee's GTM and built the first 90 days I'd run. Let's go through it together; stop me anywhere." Then scroll. You are leading, not being interviewed.</div>
+    <div class="scrollcue rv"><span class="arr">↓</span> Scroll, or use <span class="kbd">←</span> <span class="kbd">→</span> to present</div>
+  </div>
+</section>
+
+<!-- THE READ -->
+<section id="read">
+  <div class="wrap">
+    <div class="sec-tag rv">01 – The read</div>
+    <h2 class="rv">Trofee isn't an app problem. <em>It's a liquidity problem.</em></h2>
+    <p class="lead rv">You're building the Whatnot of MENA – live, social, collectible-first commerce. The product is real. The bet is whether the <strong>flywheel spins</strong>: enough sellers running enough shows that reliably fill with enough buyers. Here is what I see.</p>
+    <div class="grid g4" style="margin-top:40px">
+      <div class="card rv"><div class="ix">THE MODEL</div><h3>Live, two-sided</h3><p>Livestream marketplace for sneakers, trading cards, sports cards &amp; collectibles. <b>GMV compounds</b> on repeat buyers and retained sellers – not one-time installs.</p></div>
+      <div class="card rv"><div class="ix">THE TEAM</div><h3>You've done this</h3><p>Farfetch marketplace (8 yrs) + Souq/Amazon. You already know the cold start is <b>supply, not demand</b>. I won't pretend otherwise.</p></div>
+      <div class="card rv"><div class="ix">THE TIMING</div><h3>The window is open</h3><p>Whatnot → multi-billion in under 5 years. MENA has dense, underserved collector communities already trading on <b>Instagram &amp; WhatsApp</b>.</p></div>
+      <div class="card rv"><div class="ix">THE RISK</div><h3>Thin shows kill</h3><p>Marketplaces die from <b>empty rooms</b>, not bad UI. Every show with no buyers burns a seller you spent real money to recruit.</p></div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"I'm not going to flatter the product – you know it's good. The whole game is liquidity. So everything I'll show you is built backward from: how do we make sure every show is full?" This signals you understand marketplaces, not just outbound.</div>
+  </div>
+</section>
+
+<!-- THESIS -->
+<section id="thesis">
+  <div class="wrap">
+    <div class="sec-tag rv">02 – Operating thesis</div>
+    <h2 class="rv">Three laws I'd run the GTM by</h2>
+    <div style="margin-top:34px">
+      <div class="law rv"><div class="num">01</div><div><h3>Supply is the hard side</h3><p>You recruit sellers; demand follows great shows. So the #1 GTM job is a repeatable machine that <b>finds, scores, recruits and activates high-GMV sellers</b> – not a campaign that chases buyers. <span class="src">Marketplace cold-start theory</span></p></div></div>
+      <div class="law rv"><div class="num">02</div><div><h3>Liquidity is the product</h3><p>Trofee isn't "live" until shows reliably fill. Early on I'd <b>guarantee liquidity</b> – seed buyers into first shows so no recruited seller ever streams to an empty room. Protect the supply you paid for. <span class="src">Liquidity-first sequencing</span></p></div></div>
+      <div class="law rv"><div class="num">03</div><div><h3>Concentrate to ignite</h3><p>Win one <b>atomic network</b> first – e.g. GCC Pokémon/TCG or sneakers – where supply and demand are dense enough to self-sustain. Get the loop spinning in one niche, then template it. Horizontal too early = thin everywhere. <span class="src">Atomic network → expansion</span></p></div></div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"If you only remember one thing: I'd recruit sellers first, guarantee their first shows are full, and do it in ONE niche before going wide. That's the difference between a marketplace that ignites and one that stays lukewarm."</div>
+  </div>
+</section>
+
+<!-- BOWTIE -->
+<section id="bowtie">
+  <div class="wrap">
+    <div class="sec-tag rv">03 – The model</div>
+    <h2 class="rv">A two-sided <em>Bowtie</em>, not a funnel</h2>
+    <p class="lead rv">A funnel ends at the first sale. A marketplace lives on what happens <strong>after</strong> – repeat GMV and seller retention. So I model both sides meeting at liquidity, with the right wing (retention &amp; expansion) carrying the value.</p>
+
+    <div class="bowtie rv">
+      <div class="bt-col bt-supply">
+        <h4><span class="livedot" style="background:var(--gold);box-shadow:none"></span> Supply funnel – sellers</h4>
+        <div class="bt-stage">Sourced <span class="w">signals</span></div>
+        <div class="bt-stage">Recruited <span class="w">outreach</span></div>
+        <div class="bt-stage">Onboarded <span class="w">concierge</span></div>
+        <div class="bt-stage">First show <span class="w">activation</span></div>
+      </div>
+      <div class="bt-mid">
+        <div class="knot">Liquidity</div>
+        <div class="sub">where supply<br>meets demand</div>
+      </div>
+      <div class="bt-col bt-demand">
+        <h4><span class="livedot" style="box-shadow:none"></span> Demand funnel – buyers</h4>
+        <div class="bt-stage">Reached <span class="w">loops + paid</span></div>
+        <div class="bt-stage">Installed <span class="w">activation</span></div>
+        <div class="bt-stage">First buy <span class="w">conversion</span></div>
+        <div class="bt-stage">Repeat / VIP <span class="w">retention</span></div>
+      </div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:24px;font-weight:600;margin:48px 0 6px">Model it live</h3>
+    <p style="color:var(--muted);max-width:680px;margin-bottom:6px">Drag the levers. This is the GMV math I'd own as the metric I'm hired against. <span style="font-family:var(--mono);font-size:12px;color:var(--muted2)">(Illustrative – AED.)</span></p>
+
+    <div class="calc rv">
+      <div class="calc-inputs">
+        <h4>Inputs · the levers I move</h4>
+        <div class="slider"><div class="row"><label>Active sellers</label><span class="val" id="v_sellers">60</span></div><input type="range" id="s_sellers" min="10" max="500" value="60" step="5"></div>
+        <div class="slider"><div class="row"><label>Shows / seller / week</label><span class="val" id="v_shows">2</span></div><input type="range" id="s_shows" min="1" max="7" value="2" step="1"></div>
+        <div class="slider"><div class="row"><label>Avg buyers / show</label><span class="val" id="v_buyers">35</span></div><input type="range" id="s_buyers" min="5" max="200" value="35" step="5"></div>
+        <div class="slider"><div class="row"><label>Avg spend / buyer / show</label><span class="val" id="v_spend">350</span></div><input type="range" id="s_spend" min="50" max="2000" value="350" step="25"></div>
+        <div class="slider"><div class="row"><label>Trofee take rate</label><span class="val" id="v_take">10%</span></div><input type="range" id="s_take" min="5" max="20" value="10" step="1"></div>
+      </div>
+      <div class="calc-out">
+        <h4>Output · the engine</h4>
+        <div class="bignum gold"><div class="lab">Annualised GMV run-rate</div><div class="n" id="o_gmv_yr">AED 76.4M</div><div class="usd" id="o_gmv_yr_usd">≈ $20.8M USD</div></div>
+        <div class="bignum live"><div class="lab">Trofee net revenue (take)</div><div class="n" id="o_rev_yr">AED 7.6M</div><div class="usd" id="o_rev_yr_usd">≈ $2.1M USD</div></div>
+        <div class="outrow">
+          <div class="it"><div class="lab">Shows / week</div><div class="n" id="o_shows">120</div></div>
+          <div class="it"><div class="lab">GMV / week</div><div class="n" id="o_gmv_wk">AED 1.5M</div></div>
+          <div class="it"><div class="lab">GMV / month</div><div class="n" id="o_gmv_mo">AED 6.4M</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"Notice the most violent lever isn't take rate – it's active sellers and shows-per-seller. That's why my plan obsesses over the supply engine. If I 2x sellers, everything downstream moves." Drag 'active sellers' from 60 → 200 live to make the point.</div>
+  </div>
+</section>
+
+<!-- SUPPLY / SELLER ENGINE -->
+<section id="supply">
+  <div class="wrap">
+    <div class="sec-tag rv">04 – The hard side · GTM Engineering</div>
+    <h2 class="rv">The seller recruitment <em>engine</em></h2>
+    <p class="lead rv">This is the part most people hand-wave. I build it as a <strong>system</strong>: signals in, activated sellers out – measurable at every stage. Click any stage.</p>
+
+    <div class="pipe rv" id="pipe">
+      <div class="pstep active" data-i="0"><div class="pn">01</div><h4>Source</h4><div class="tool">signals</div></div>
+      <div class="pstep" data-i="1"><div class="pn">02</div><h4>Enrich</h4><div class="tool">Clay waterfall</div></div>
+      <div class="pstep" data-i="2"><div class="pn">03</div><h4>Score</h4><div class="tool">seller ICP</div></div>
+      <div class="pstep" data-i="3"><div class="pn">04</div><h4>Sequence</h4><div class="tool">WhatsApp-first</div></div>
+      <div class="pstep" data-i="4"><div class="pn">05</div><h4>Onboard</h4><div class="tool">concierge</div></div>
+      <div class="pstep" data-i="5"><div class="pn">06</div><h4>Activate</h4><div class="tool">seeded show</div></div>
+    </div>
+    <div class="pdetail rv" id="pdetail"></div>
+
+    <div class="grid g2" style="margin-top:22px">
+      <div class="artifact rv">
+        <div class="head"><span class="d" style="background:var(--gold)"></span><span class="d" style="background:var(--live)"></span><span class="d" style="background:var(--teal)"></span> &nbsp;seller_icp_score.clay</div>
+        <div class="body">
+          <span class="l m"># Sample: @riyadh_pokemon_vault</span>
+          <div class="scorebar"><span class="nm">Audience size</span><span class="track"><span class="fill" style="width:88%"></span></span><span class="pct">88</span></div>
+          <div class="scorebar"><span class="nm">Post cadence</span><span class="track"><span class="fill" style="width:74%"></span></span><span class="pct">74</span></div>
+          <div class="scorebar"><span class="nm">Inventory depth</span><span class="track"><span class="fill" style="width:92%"></span></span><span class="pct">92</span></div>
+          <div class="scorebar"><span class="nm">Category fit</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="pct">100</span></div>
+          <div class="scorebar"><span class="nm">Sells-live proof</span><span class="track"><span class="fill" style="width:65%"></span></span><span class="pct">65</span></div>
+          <span class="l" style="margin-top:12px">composite = <span class="c">84 / 100</span> → <span class="c">TIER A – recruit now</span></span>
+        </div>
+      </div>
+      <div class="artifact rv">
+        <div class="head"><span class="d" style="background:#25d366"></span> &nbsp;whatsapp_outreach · seller recruit</div>
+        <div class="body">
+          <span class="l m"># EDP-led, not a pitch</span>
+          <span class="l">Hi Khalid – saw your Pokémon drops on IG,</span>
+          <span class="l">the WOTC lot last week was unreal.</span>
+          <span class="l">&nbsp;</span>
+          <span class="l">Quick one: you're already doing the hard</span>
+          <span class="l">part (the audience). On Trofee you'd run</span>
+          <span class="l">the same drop <span class="c">live + auction</span>, take</span>
+          <span class="l">card payments in-stream, we handle</span>
+          <span class="l">shipping. Sellers like you are doing</span>
+          <span class="l"><span class="c">5-figure</span> nights.</span>
+          <span class="l">&nbsp;</span>
+          <span class="l">Want me to set up + seed your first</span>
+          <span class="l">show this week? I'll bring the buyers.</span>
+        </div>
+      </div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"The card on the left is real GTM Engineering – I'd build seller scoring in Clay so we recruit Tier-A first and don't waste onboarding on people who'll churn. The message on the right leads with THEIR existential data point – their audience – not our features. That's the OS I've built thousands of these in."</div>
+  </div>
+</section>
+
+<!-- DEMAND -->
+<section id="demand">
+  <div class="wrap">
+    <div class="sec-tag rv">05 – The easy side, done right</div>
+    <h2 class="rv">Buyer demand: <em>loops first</em>, paid second</h2>
+    <p class="lead rv">Linear paid spend is a leaky bucket for marketplaces. I'd build <strong>growth loops</strong> where each show creates the demand for the next – then use paid only to pour fuel on what already compounds.</p>
+
+    <div class="grid g2" style="margin-top:36px">
+      <div class="loop rv"><div class="lt"><div class="ic">♻️</div><h3>Seller-led loop <span style="font-size:12px;color:var(--gold);font-family:var(--mono)">· core</span></h3></div><div class="flow">seller's IG/TikTok audience → tunes into show → buys → clips shared → pulls new buyers + new sellers</div><p>Every recruited seller brings their own crowd. This is the cheapest, highest-trust demand on earth – and it's why supply recruitment IS demand gen.</p></div>
+      <div class="loop rv"><div class="lt"><div class="ic">🎬</div><h3>Content loop</h3></div><div class="flow">best auction moments → Reels / TikTok / Shorts → app installs → viewers → more clip-worthy moments</div><p>Live commerce is natively viral. A bidding-war clip is free distribution. I'd systematise clipping every show into a content engine.</p></div>
+      <div class="loop rv"><div class="lt"><div class="ic">🤝</div><h3>Community / referral loop</h3></div><div class="flow">collector invites collector → niche WhatsApp &amp; Discord groups → drop alerts → group tunes in together</div><p>Collectors already cluster in groups. Seed Trofee inside them, reward invites. MENA runs on WhatsApp – I'd meet them there.</p></div>
+      <div class="loop rv"><div class="lt"><div class="ic">🔔</div><h3>Retention loop</h3></div><div class="flow">scheduled drops → "your seller is live" push → repeat buy → follow more sellers → more triggers</div><p>The right wing of the bowtie. Appointment-viewing + follows turn one purchase into a habit. This is where GMV actually compounds.</p></div>
+    </div>
+
+    <div class="card rv" style="margin-top:18px;border-color:var(--line2)">
+      <div class="ix">PAID, USED SURGICALLY</div>
+      <h3 style="margin-bottom:12px">Demand capture vs demand creation</h3>
+      <p><b>Capture</b> (high intent, low volume): App Store search, "Pokémon auction / sneaker live UAE", retarget engaged-but-didn't-buy. <b>Creation</b> (build the category): creator partnerships with MENA collectors, TikTok seeded clips, event drops around launches &amp; sneaker releases. Paid amplifies loops – it never replaces them.</p>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"Here's the insight that ties it together: in a marketplace, recruiting the right seller IS your demand-gen, because they bring their audience. So I don't run supply and demand as two teams – I run one loop." This shows systems thinking, the RevOps brain.</div>
+  </div>
+</section>
+
+<!-- REVOPS -->
+<section id="revops">
+  <div class="wrap">
+    <div class="sec-tag rv">06 – RevOps · the instrumentation</div>
+    <h2 class="rv">The stack &amp; data that makes it <em>measurable</em></h2>
+    <p class="lead rv">An engine you can't measure is a guess. I'd instrument one North Star, decompose it into the levers from the model above, and wire a stack where <strong>every stage reports itself</strong>.</p>
+
+    <div class="tree rv">
+      <div class="nsm"><div class="lab">North Star metric</div><div class="v">Weekly GMV</div></div>
+      <div class="inputs-tree">
+        <div class="leaf"><div class="t">Active sellers</div><div class="d">supply health</div></div>
+        <div class="leaf"><div class="t">Shows / week × fill rate</div><div class="d">liquidity</div></div>
+        <div class="leaf"><div class="t">Buy rate × AOV</div><div class="d">conversion</div></div>
+        <div class="leaf"><div class="t">Buyer repeat rate</div><div class="d">retention</div></div>
+      </div>
+    </div>
+
+    <div class="stack">
+      <div class="stackrow rv"><div class="layer">Source</div><div class="body"><h4>Signal &amp; sourcing layer</h4><p>Finds sellers from IG/TikTok resale, card &amp; sneaker shops, collector communities, existing Whatnot/eBay-Live sellers.</p><div class="tools">Clay · Instagram/TikTok signals · Google Maps · Apify</div></div></div>
+      <div class="stackrow rv"><div class="layer">CRM</div><div class="body"><h4>Seller pipeline + SLAs</h4><p>Stages: Sourced → Contacted → Onboarding → First Show → Activated → Scaled. Each stage has an owner, an SLA, and a conversion target.</p><div class="tools">Attio / HubSpot · automated stage triggers</div></div></div>
+      <div class="stackrow rv"><div class="layer">Events</div><div class="body"><h4>Product &amp; GMV telemetry</h4><p>Every show, bid, buy, install &amp; push tracked. Cohorts, seller leaderboards, fill-rate &amp; repeat-rate dashboards.</p><div class="tools">App analytics · warehouse · BI dashboard</div></div></div>
+      <div class="stackrow rv"><div class="layer">Lifecycle</div><div class="body"><h4>Automation &amp; comms</h4><p>Seller activation nudges, churned-seller reactivation, buyer winback, "your seller is live" triggers – MENA-native on WhatsApp.</p><div class="tools">WhatsApp Business API · n8n · push/email</div></div></div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"This is the RevOps half. I'd treat the seller pipeline exactly like a sales pipeline – stages, SLAs, conversion targets – because that's what it is. And I'd report the business on ONE number, weekly GMV, broken into four levers anyone in the company can act on."</div>
+  </div>
+</section>
+
+<!-- 90 DAY PLAN -->
+<section id="plan">
+  <div class="wrap">
+    <div class="sec-tag rv">07 – Execution</div>
+    <h2 class="rv">My first <em>90 days</em></h2>
+    <p class="lead rv">Concrete, sequenced, and accountable to numbers. One niche, one loop, proven – then templated.</p>
+
+    <div class="tabs rv">
+      <div class="tab active" data-p="0"><div class="ph">Phase 1</div><div class="tt">Instrument &amp; pick the network</div><div class="days">Days 0–30</div></div>
+      <div class="tab" data-p="1"><div class="ph">Phase 2</div><div class="tt">Recruit &amp; guarantee liquidity</div><div class="days">Days 31–60</div></div>
+      <div class="tab" data-p="2"><div class="ph">Phase 3</div><div class="tt">Compound &amp; templatise</div><div class="days">Days 61–90</div></div>
+    </div>
+
+    <div class="panel show" data-p="0">
+      <div class="panel-grid">
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--gold)"></span> GTM Engineering</div><ul><li>Build the seller sourcing engine in Clay (IG/TikTok resale, card &amp; sneaker shops, collector groups)</li><li>Define the seller ICP scorecard &amp; tiering</li><li>Draft WhatsApp-first recruitment sequences (EDP-led)</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--teal)"></span> RevOps</div><ul><li>Stand up seller CRM with stages + SLAs</li><li>Wire GMV / fill-rate / cohort dashboards</li><li>Agree the North Star + input-metric tree with you</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--live)"></span> Strategy</div><ul><li>Pick the atomic network (likely GCC TCG or sneakers)</li><li>Map the 50 highest-GMV-potential sellers in it</li><li>Set the liquidity-guarantee playbook for first shows</li></ul></div>
+      </div>
+      <div class="target"><span class="lab">Exit target</span><span class="v">Engine live · 50 Tier-A sellers mapped · dashboards reporting</span></div>
+    </div>
+
+    <div class="panel" data-p="1">
+      <div class="panel-grid">
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--gold)"></span> GTM Engineering</div><ul><li>Run recruitment sequences at volume; book onboarding calls</li><li>A/B the seller pitch (audience-led vs earnings-led)</li><li>Concierge-onboard the first cohort</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--teal)"></span> RevOps</div><ul><li>Track source→first-show conversion; kill weak sources</li><li>Instrument fill rate &amp; seed buyers to guarantee it</li><li>Launch the content-clip loop from every show</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--live)"></span> Strategy</div><ul><li>Concentrate launches into "event" windows for density</li><li>Activate community/referral loops in niche groups</li><li>Protect every recruited seller – no empty rooms</li></ul></div>
+      </div>
+      <div class="target"><span class="lab">Exit target</span><span class="v">20–30 sellers live · 100% first-show fill · first repeat buyers</span></div>
+    </div>
+
+    <div class="panel" data-p="2">
+      <div class="panel-grid">
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--gold)"></span> GTM Engineering</div><ul><li>Build the seller referral loop ("invite a seller")</li><li>Automate lifecycle: activation nudges + reactivation</li><li>Open niche #2 by cloning the engine</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--teal)"></span> RevOps</div><ul><li>Cohort retention &amp; seller leaderboards live</li><li>Forecast GMV off the input-metric tree</li><li>Report repeatable CAC→GMV payback per niche</li></ul></div>
+        <div class="pcard"><div class="h"><span class="dotc" style="background:var(--live)"></span> Strategy</div><ul><li>Tune for repeat GMV (the bowtie's right wing)</li><li>Ship the written, repeatable niche-launch playbook</li><li>Define the hiring plan to scale the engine</li></ul></div>
+      </div>
+      <div class="target"><span class="lab">Exit target</span><span class="v">Self-sustaining niche #1 · niche #2 launching · playbook documented</span></div>
+    </div>
+    <div class="say"><b>🎤 Say this</b>"I'm accountable to the exit target on each phase – not activity. If by day 60 I don't have sellers live with full shows, the plan is wrong and we change it. Click through the phases; ask me to defend any line." Click the tabs as you talk.</div>
+  </div>
+</section>
+
+<!-- CLOSE -->
+<section id="close">
+  <div class="wrap close">
+    <div class="sec-tag rv" style="justify-content:center">08 – Why me</div>
+    <h2 class="rv">I build the engine <em>and</em> run the ops</h2>
+    <div class="edge">
+      <div class="e rv"><div class="ic">⚙️</div><h3>GTME + RevOps in one</h3><p>Most hires do one. I build the Clay/outbound engine that recruits sellers AND the pipeline, dashboards &amp; lifecycle ops that make it measurable. Founding-GTM range.</p></div>
+      <div class="e rv"><div class="ic">🌍</div><h3>MENA-native, bilingual</h3><p>Arabic + English. WhatsApp-first recruitment, GCC collector communities, trust &amp; localization built in – not bolted on. Your edge over a Whatnot copy is local; I am local.</p></div>
+      <div class="e rv"><div class="ic">🧠</div><h3>I run on a system</h3><p>This teardown came out of a GTM operating system I built – a queryable brain of frameworks, sales canon &amp; playbooks. I don't improvise GTM; I run a repeatable method.</p></div>
+    </div>
+    <div class="cta rv">Give me <b>one niche</b> and 90 days. Let's prove the loop spins.</div>
+    <div class="signoff rv">
+      <div class="nm">Mohamed Abuissa</div>
+      <div class="rl">GTM Engineer · RevOps · MENA B2B + Marketplaces</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="dis">Independent teardown prepared for a conversation with Trofee. Public-source research on company, founders &amp; backers; all GMV figures are an illustrative model, not Trofee internals. Frameworks: marketplace cold-start, the Bowtie, growth loops, ICP scoring, demand gen vs capture, GCC localization.</p>
+    <p>Built by Mohamed Abuissa · <span style="color:var(--gold)">Supply is the hard side.</span></p>
+  </div>
+</footer>
+
+<script>
+/* ---------- presenter notes toggle ---------- */
+const noteBtn=document.getElementById('noteBtn');
+noteBtn.addEventListener('click',()=>document.body.classList.toggle('notes'));
+
+/* ---------- reveal on scroll ---------- */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ---------- active section in side nav ---------- */
+const navlinks=[...document.querySelectorAll('.sidenav a')];
+const secs=navlinks.map(a=>document.querySelector(a.getAttribute('href')));
+const navIo=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);navlinks.forEach(l=>l.classList.remove('active'));if(navlinks[i])navlinks[i].classList.add('active')}})},{threshold:.5});
+secs.forEach(s=>s&&navIo.observe(s));
+
+/* ---------- keyboard section nav ---------- */
+let cur=0;
+function goto(i){cur=Math.max(0,Math.min(secs.length-1,i));secs[cur]&&secs[cur].scrollIntoView({behavior:'smooth'});}
+window.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT')return;
+  if(e.key==='ArrowRight'||e.key==='PageDown'){e.preventDefault();goto(cur+1)}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();goto(cur-1)}
+});
+// keep cur synced with what's on screen
+const curIo=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);if(i>=0)cur=i}})},{threshold:.5});
+secs.forEach(s=>s&&curIo.observe(s));
+
+/* ---------- GMV calculator ---------- */
+const fmtA=n=>{ // AED short, consistent 1-decimal under 100M
+  if(n>=1e9)return 'AED '+(n/1e9).toFixed(1)+'B';
+  if(n>=100e6)return 'AED '+Math.round(n/1e6)+'M';
+  if(n>=1e6)return 'AED '+(n/1e6).toFixed(1)+'M';
+  if(n>=1e3)return 'AED '+Math.round(n/1e3)+'K';
+  return 'AED '+Math.round(n);
+};
+const fmtUSD=n=>{const u=n/3.67;
+  if(u>=1e9)return '≈ $'+(u/1e9).toFixed(1)+'B USD';
+  if(u>=100e6)return '≈ $'+Math.round(u/1e6)+'M USD';
+  if(u>=1e6)return '≈ $'+(u/1e6).toFixed(1)+'M USD';
+  if(u>=1e3)return '≈ $'+Math.round(u/1e3)+'K USD';
+  return '≈ $'+Math.round(u)+' USD';};
+const ids=['sellers','shows','buyers','spend','take'];
+const S={};ids.forEach(k=>S[k]=document.getElementById('s_'+k));
+function calc(){
+  const sellers=+S.sellers.value, shows=+S.shows.value, buyers=+S.buyers.value, spend=+S.spend.value, take=+S.take.value;
+  document.getElementById('v_sellers').textContent=sellers;
+  document.getElementById('v_shows').textContent=shows;
+  document.getElementById('v_buyers').textContent=buyers;
+  document.getElementById('v_spend').textContent=spend;
+  document.getElementById('v_take').textContent=take+'%';
+  const showsWk=sellers*shows;
+  const gmvWk=showsWk*buyers*spend;
+  const gmvYr=gmvWk*52;
+  const gmvMo=gmvYr/12;
+  const revYr=gmvYr*take/100;
+  document.getElementById('o_shows').textContent=showsWk.toLocaleString();
+  document.getElementById('o_gmv_wk').textContent=fmtA(gmvWk);
+  document.getElementById('o_gmv_mo').textContent=fmtA(gmvMo);
+  document.getElementById('o_gmv_yr').textContent=fmtA(gmvYr);
+  document.getElementById('o_gmv_yr_usd').textContent=fmtUSD(gmvYr);
+  document.getElementById('o_rev_yr').textContent=fmtA(revYr);
+  document.getElementById('o_rev_yr_usd').textContent=fmtUSD(revYr);
+}
+ids.forEach(k=>S[k].addEventListener('input',calc));
+calc();
+
+/* ---------- seller pipeline detail ---------- */
+const pdata=[
+  {t:'Source',hl:'where great sellers already are',p:'Sellers don\'t come from a list you buy – they come from signals. I pull from the places collectors already trade.',li:['IG / TikTok resale accounts (cards, sneakers, watches)','Physical card &amp; sneaker shops via Google Maps','Collector WhatsApp &amp; Discord communities','Existing Whatnot / eBay Live sellers in-region','Auction & consignment houses']},
+  {t:'Enrich',hl:'Clay waterfall',p:'Each candidate gets enriched into a decision-ready row – so we only spend human time on people worth recruiting.',li:['Follower count &amp; engagement','Posting cadence (are they active?)','Best contact: WhatsApp > IG > email','Category &amp; estimated inventory depth','Evidence they already sell live']},
+  {t:'Score',hl:'seller ICP scorecard',p:'A weighted score turns gut-feel into tiering. Tier-A gets recruited this week; Tier-C waits.',li:['Audience size &amp; quality','Post cadence / consistency','Inventory depth','Category fit to launch niche','Proof they can sell live']},
+  {t:'Sequence',hl:'WhatsApp-first, EDP-led',p:'MENA runs on WhatsApp. The message leads with THEIR existential data point – their audience – not our feature list.',li:['Channel order: WhatsApp → IG DM → email','Hook = their content, not our pitch','Offer = run your drop live, we handle payments + shipping','CTA = "I\'ll set up &amp; seed your first show"','Spintax + personalization at scale']},
+  {t:'Onboard',hl:'concierge, not self-serve',p:'Early sellers get white-glove. Friction here is the difference between a first show and a ghost.',li:['Schedule first show within 7 days','Lighting / audio / framing quick-coach','Pricing &amp; auction-format guidance','Inventory prep checklist','Set expectations on GMV']},
+  {t:'Activate',hl:'guarantee the first show fills',p:'The single most important moment. A full first show makes a seller. An empty one loses them forever.',li:['Seed buyers from our community into show #1','Cross-promote on Trofee channels','Day-of run-of-show support','Capture clips for the content loop','Debrief → book show #2 before they leave']}
+];
+const psteps=[...document.querySelectorAll('.pstep')];
+const pdetail=document.getElementById('pdetail');
+function renderP(i){
+  const d=pdata[i];
+  pdetail.innerHTML=`<h4>${d.t} – <span>${d.hl}</span></h4><p>${d.p}</p><ul>${d.li.map(x=>`<li>${x}</li>`).join('')}</ul>`;
+  psteps.forEach(s=>s.classList.toggle('active',+s.dataset.i===i));
+}
+psteps.forEach(s=>s.addEventListener('click',()=>renderP(+s.dataset.i)));
+renderP(0);
+
+/* ---------- roadmap tabs ---------- */
+const tabs=[...document.querySelectorAll('.tab')];
+const panels=[...document.querySelectorAll('.panel')];
+tabs.forEach(t=>t.addEventListener('click',()=>{
+  const p=t.dataset.p;
+  tabs.forEach(x=>x.classList.toggle('active',x===t));
+  panels.forEach(x=>x.classList.toggle('show',x.dataset.p===p));
+}));
+</script>
+</body>
+</html>
