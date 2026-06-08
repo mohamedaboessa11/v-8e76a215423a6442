@@ -314,6 +314,16 @@ footer .dis{max-width:640px;margin:0 auto 14px;line-height:1.6}
 .tkB{border-top-color:var(--gold)}.tkB .lt,.tkB .sla{color:var(--gold)}
 .tkC{border-top-color:#6aa3d8}.tkC .lt,.tkC .sla{color:#6aa3d8}
 .tkD{border-top-color:var(--muted2)}.tkD .lt,.tkD .sla{color:var(--muted2)}
+.fi{margin-top:16px;display:grid;grid-template-columns:96px 1fr 1fr;gap:9px}
+.fi .axis{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);display:flex;align-items:center;justify-content:center;text-align:center;padding:4px}
+.fi .cell{background:var(--surface);border:1px solid var(--line);border-top-width:3px;border-radius:12px;padding:15px 16px}
+.fi .cell .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:5px}
+.fi .cell .act{font-family:var(--serif);font-size:17px;font-weight:600;line-height:1.12}
+.fi .c1{border-top-color:var(--teal)}.fi .c1 .act{color:var(--teal)}
+.fi .c2{border-top-color:var(--gold)}.fi .c2 .act{color:var(--gold)}
+.fi .c3{border-top-color:#6aa3d8}.fi .c3 .act{color:#6aa3d8}
+.fi .c4{border-top-color:var(--muted2)}.fi .c4 .act{color:var(--ink)}
+@media(max-width:600px){.fi{grid-template-columns:1fr 1fr}.fi .axis{display:none}}
 </style>
 </head>
 <body>
@@ -524,6 +534,22 @@ footer .dis{max-width:640px;margin:0 auto 14px;line-height:1.6}
       <div class="tk tkB"><div class="lt">B</div><div class="rng">60–79</div><p>Fast-track. Guided onboarding, first show within 2 weeks.</p><div class="sla">Contact &lt; 72h</div></div>
       <div class="tk tkC"><div class="lt">C</div><div class="rng">40–59</div><p>Self-serve + follow-up. Bring them in when their audience or stock grows.</p><div class="sla">Automated</div></div>
       <div class="tk tkD"><div class="lt">D</div><div class="rng">&lt; 40</div><p>Waitlist or decline politely. Re-score if they reapply with traction.</p><div class="sla">No human time</div></div>
+    </div>
+
+    <h3 style="font-family:var(--serif);font-size:24px;font-weight:600;margin:46px 0 4px">Fit is half of it. <em style="font-style:italic;color:var(--gold)">Intent</em> is the other half</h3>
+    <p style="color:var(--muted);max-width:730px;margin-bottom:6px">The score above is <b style="color:var(--ink)">fit</b> – who they are. The other half is <b style="color:var(--ink)">intent</b> – how warm they are right now. A good-fit seller who's active this week jumps the queue. Even a dormant applicant from a year ago shoots to the top the moment they re-engage.</p>
+    <div class="grid g2" style="margin-top:14px">
+      <div class="card rv"><div class="ix">SELLER INTENT · WARM NOW</div><h3>Who's leaning in</h3><p>Re-applied or replied to outreach · posting / selling live more this week · joined the seller WhatsApp or showed up to a seller session · referred by an active seller · opening &amp; clicking our messages.</p></div>
+      <div class="card rv"><div class="ix">BUYER INTENT · SAME IDEA</div><h3>Bonus: score buyers too</h3><p>Watched 3+ shows this week · follows a seller about to go live · left a bid unfinished · bought before and just came back. Each one triggers a "your seller is live" nudge or VIP treatment.</p></div>
+    </div>
+    <div class="fi rv">
+      <div class="axis"></div><div class="axis">Warm right now</div><div class="axis">Quiet</div>
+      <div class="axis">Good fit</div>
+      <div class="cell c1"><div class="lab">good fit · warm</div><div class="act">Call today</div></div>
+      <div class="cell c2"><div class="lab">good fit · quiet</div><div class="act">Nurture, wait for a signal</div></div>
+      <div class="axis">Weak fit</div>
+      <div class="cell c3"><div class="lab">weak fit · warm</div><div class="act">Quick check</div></div>
+      <div class="cell c4"><div class="lab">weak fit · quiet</div><div class="act">Waitlist</div></div>
     </div>
 
     <div class="grid g2" style="margin-top:18px">
